@@ -1,0 +1,17 @@
+msgid "home"
+msgstr "Trang Chủ"
+
+msgid "categories"
+msgstr "Thể Loại"
+
+msgid "recipes"
+msgstr "Công thức"
+
+msgid "tip-and-tricks"
+msgstr "Tip & Tricks"
+
+msgid "contact-us"
+msgstr "Liên Hệ"
+
+msgid "login-and-register"
+msgstr "Đăng nhập / Đăng ký"
