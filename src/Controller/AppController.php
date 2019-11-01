@@ -56,7 +56,7 @@ class AppController extends Controller
     }
 
     public function changeLanguage($language = null) {
-        if ($language != null && in_array($language, ['en', 'vi'])) {
+        if ($language != null && in_array($language, [\App\Model\Enum\ELanguage::EN, \App\Model\Enum\ELanguage::VI])) {
             $this->request->session()->write('Config.language', $language);
             return $this->redirect($this->referer());
         } else {

@@ -15,3 +15,21 @@ msgstr "Liên Hệ"
 
 msgid "login-and-register"
 msgstr "Đăng nhập / Đăng ký"
+
+msgid "welcome"
+msgstr "Xin Chào"
+
+msgid "login-to-your-account"
+msgstr "Đăng nhập vào tài khoản của bạn"
+
+msgid "password"
+msgstr "Mật khẩu"
+
+msgid "remember_me"
+msgstr "Nhớ mật khẩu"
+
+msgid "forget_password"
+msgstr "Quên mật khẩu"
+
+msgid "login"
+msgstr "Đăng nhập"

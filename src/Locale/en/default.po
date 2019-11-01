@@ -15,3 +15,21 @@ msgstr "Contact Us"
 
 msgid "login-and-register"
 msgstr "Login / Register"
+
+msgid "welcome"
+msgstr "Welcome"
+
+msgid "login-to-your-account"
+msgstr "Login To Your Account"
+
+msgid "password"
+msgstr "Password"
+
+msgid "remember_me"
+msgstr "Remember Me"
+
+msgid "forget_password"
+msgstr "Forget Password"
+
+msgid "login"
+msgstr "Login"
