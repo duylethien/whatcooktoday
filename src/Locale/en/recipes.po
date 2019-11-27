@@ -1,0 +1,17 @@
+msgid "browse-recipes"
+msgstr "Browse Recipes"
+
+msgid "all-recipes"
+msgstr "All Recipes"
+
+msgid "view-recipe"
+msgstr "View Recipe"
+
+msgid "easy"
+msgstr "Easy"
+
+msgid "medium"
+msgstr "Medium"
+
+msgid "hard"
+msgstr "Hard"

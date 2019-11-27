@@ -1,5 +1,5 @@
 @import url("font-awesome.css");
-@import url("icons.css");	
+@import url("icons.css");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
 @import url("https://fonts.googleapis.com/css?family=Arvo");
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, a, img, ol, ul, li, fieldset, form, label, caption, article, figure, figcaption, footer, header, menu, nav, section, video {
@@ -8,7 +8,7 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, a, img, ol, ul
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline; 
+    vertical-align: baseline;
 }
 article, aside, figure, footer, header, menu, nav, section {
     display: block; }
@@ -157,7 +157,7 @@ input[type="file"]:focus,
 textarea:focus {
     background-color: #fafafa;
     border: 1px solid #e6e6e6;
-    color: #777; 
+    color: #777;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
@@ -188,7 +188,7 @@ label,
 legend {
     display: block;
     font-weight: bold;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: normal;
     margin-bottom: 5px;
 }
@@ -1445,7 +1445,7 @@ p.login-icon {
     text-transform: capitalize;
 }
 p.login-icon b{
-    color: #FFA41F;   
+    color: #FFA41F;
     font-weight: bold;
 }
 .login-icon i {
@@ -3132,7 +3132,7 @@ ol.directions > li:before {
 @media only screen and (max-width: 767px) {
     .CaptionAlignment {
         width: 100% !important;
-        margin-left: 0; 
+        margin-left: 0;
     }
     .rsNav { display: none; }
 
@@ -3334,7 +3334,7 @@ ol.directions > li:before {
 .ico {
     display: inline-block;
     overflow: hidden;
-    background-image: url(../images/icons.png);
+    background-image: url(../webroot/img/icons/icons.png);
     background-repeat: no-repeat;
 }
 .i-easy {
@@ -3551,7 +3551,7 @@ ul.categories li a:hover,
 .ui-accordion .ui-accordion-header-active,
 a.nav-toggle.active,
 .upload-btn,
-.button.color, input[type="button"], 
+.button.color, input[type="button"],
 input[type="submit"],
 .button.light:hover,
 .pagination ul li a.current-page { background-color: #FFA41F; }
@@ -3692,7 +3692,7 @@ a.adv-search-btn:hover { color: #FFA41F; }
 
 .sidebar-box .user figure img {
     border-radius: 50%;
-    width: 100%;   
+    width: 100%;
 }
 .details-box.ads-details-wrapper {
     padding-bottom: 40px;
@@ -4127,7 +4127,7 @@ fieldset {
 
 }
 .gallery_sortable tr button,
-.gallery_sortable tr button:focus:active, 
+.gallery_sortable tr button:focus:active,
 .gallery_sortable tr button:hover:active,
 .gallery_sortable tr button:active{
     position: absolute;
@@ -4199,24 +4199,24 @@ fieldset {
 #social_counts .item.snapchat {background: #FFFC00;}
 #social_counts .item.whatsapp {background: #25d366;}
 
-#social_counts .item i,#social_counts .item .count { 
+#social_counts .item i,#social_counts .item .count {
     display:block;
     font-size:30px;
     line-height: 100px;
 }
 
 #social_counts .item {
-    color:#fff; 
+    color:#fff;
 }
 #social_counts.square {
     max-width:870px;
     margin: 0 auto;
 }
-#social_counts.square .item .count{ 
+#social_counts.square .item .count{
     padding: 10px;
     display:block;
     font-size:20px;
-    font-weight:600; 
+    font-weight:600;
 }
 .post-item {
     margin-bottom: 20px;

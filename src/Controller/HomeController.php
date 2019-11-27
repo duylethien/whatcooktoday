@@ -1,6 +1,5 @@
 <?php
 namespace App\Controller;
-use Cake\I18n\I18n;
 
 class HomeController extends AppController {
     public function index() {
@@ -8,7 +7,6 @@ class HomeController extends AppController {
     }
     public function display(...$path)
     {
-        $lang = I18n::getLocale();
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');
@@ -24,7 +22,7 @@ class HomeController extends AppController {
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        $this->set(compact('page', 'subpage', 'lang'));
+        $this->set(compact('page', 'subpage'));
 
         try {
             $this->render(implode('/', $path));

@@ -1,0 +1,17 @@
+msgid "browse-recipes"
+msgstr "Công thức"
+
+msgid "all-recipes"
+msgstr "Tất cả công thức"
+
+msgid "view-recipe"
+msgstr "Xem công thức"
+
+msgid "easy"
+msgstr "Dễ"
+
+msgid "medium"
+msgstr "Vừa"
+
+msgid "hard"
+msgstr "Khó"

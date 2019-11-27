@@ -75,12 +75,12 @@ $cakeDescription = 'Nấu gì hôm nay';
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href=""><?= __('recipes') ?></a></li>
-                                <li><a href=""><?= __('tip-and-tricks') ?></a></li>
+                                <li><a href="/recipes"><?= __('recipes') ?></a></li>
+                                <li><a href="/articles"><?= __('tip-and-tricks') ?></a></li>
                                 <li><a href=""><?= __('contact-us') ?></a></li>
                                 <li>
                                     <a class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <?php switch ($lang) {
+                                        <?php switch (\Cake\I18n\I18n::getLocale()) {
                                             case (\App\Model\Enum\ELanguage::EN):
                                                 echo $this->Html->image("lang_en.svg", [
                                                     "height" => "20",
@@ -105,8 +105,8 @@ $cakeDescription = 'Nấu gì hôm nay';
                                         ?>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <?php foreach (\App\Model\Enum\ELanguage::getSupportedLanguage() as $supportedLang) 
-                                            if ($lang !== $supportedLang) 
+                                        <?php foreach (\App\Model\Enum\ELanguage::getSupportedLanguage() as $supportedLang)
+                                            if (\Cake\I18n\I18n::getLocale() !== $supportedLang)
                                                 echo $this->Link->changeLangByFlag($supportedLang);
                                         ?>
                                     </div>
@@ -117,17 +117,17 @@ $cakeDescription = 'Nấu gì hôm nay';
                                         <?= __('login') ?>
                                     </a>
                                 </li>
-                                <!-- <li>
-                                    <?= $this->Link->makeEdit('Change this Recipe', '/recipes/edit/5') ?>
-                                </li> -->
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </header>
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
     </div>
-    <?php ?>
+    <footer>
+    </footer>
     <div class="modal fade" id="loginModel" role="dialog">
         <div class="modal-dialog login-model">
             <div class="modal-content">
@@ -175,25 +175,7 @@ $cakeDescription = 'Nấu gì hôm nay';
         </div>
     </div>
 
-    <!-- <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer> -->
+
     <script src="<?php echo STYLE_JS ?>/custom.js"></script>
     <script>
         //NEWSLETTER FUNCTION
