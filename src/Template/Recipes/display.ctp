@@ -24,7 +24,7 @@
                         <div class="col-md-3">
                             <div class="recipe-box">
                                 <div class="thumbnail-holder">
-                                    <a>
+                                    <a href="<?= 'post/'.$item->permalink ?>" >
                                        <?php echo $this->Html->image('recipes/'.$item->featured_image, [
                                             "alt" => $item->title
                                             ]);
@@ -34,7 +34,7 @@
                                     </a>
                                 </div>
                                 <div class="recipe-box-content">
-                                    <h3><a ><?php echo $item->title ?></a></h3>
+                                    <h3><a href="<?= 'post/'.$item->permalink ?>" title="<?php echo $item->title ?>"><?php echo $item->title ?></a></h3>
                                     <h5 class="author-recipe">
                                         <a>
                                             <span>

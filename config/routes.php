@@ -63,7 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Home', 'action' => 'display', 'home']);
-    $routes->connect('/recipes', ['controller' => 'Recipes', 'action' => 'display']);
+//    $routes->connect('/recipes', ['controller' => 'Recipes', 'action' => 'display']);
     $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
 
     /**
@@ -104,3 +104,10 @@ Router::scope('/', function (RouteBuilder $routes) {
  * });
  * ```
  */
+Router::scope('/recipes', function (RouteBuilder $routes) {
+    $routes->setExtensions(['json']);
+//    $routes->get('', ['controller' => 'Recipes', 'action' => 'getListRecipePosts'], 'recipes.list');
+    $routes->get('/:slug', ['controller' => 'Recipes', 'action' => 'display'], 'recipes.list')->setPass(['slug']);
+    $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
+    $routes->fallbacks(DashedRoute::class);
+});

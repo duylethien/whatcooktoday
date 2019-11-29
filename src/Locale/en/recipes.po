@@ -15,3 +15,27 @@ msgstr "Medium"
 
 msgid "hard"
 msgstr "Hard"
+
+msgid "serves"
+msgstr "Serves"
+
+msgid "prep-time"
+msgstr "Prepare Time"
+
+msgid "cooking"
+msgstr "Cooking Time"
+
+msgid "calories"
+msgstr "Calories"
+
+msgid "difficulty"
+msgstr "Difficulty"
+
+msgid "people"
+msgstr "People"
+
+msgid "ingredients"
+msgstr "Ingredients"
+
+msgid "directions"
+msgstr "Directions"
