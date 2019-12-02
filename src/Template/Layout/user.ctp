@@ -24,7 +24,7 @@ $cakeDescription = 'Nấu gì hôm nay';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <?= $cakeDescription ?>:
-        <?= $title ?>
+        <?= $this->fetch('title') ?>
     </title>
     <!-- <?= $this->Html->meta('icon') ?> -->
 
@@ -130,10 +130,18 @@ $cakeDescription = 'Nấu gì hôm nay';
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="javascript:popup_switch('login')" class="login">
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                        <?= __('login') ?>
+                                    <a href="#" class="dropdown-toggle user-toggle" data-toggle="dropdown" role="button">
+                                        <span>
+                                            <?php echo $this->Html->image("users/default.png", [
+                                                    "alt" => "Avatar"
+                                                ]);
+                                            ?>
+                                        </span>
                                     </a>
+                                    <ul class="user-menu">
+                                        <li><a href="<?php echo ('dashboard') ?>"><i class="fa fa-dashboard"></i> <?php echo ("global_dashboard") ?></a></li>
+                                        <li><a href="<?php echo ('/logout') ?>"><i class="fa fa-power-off"></i> <?php echo ("global_logout") ?></a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </nav>

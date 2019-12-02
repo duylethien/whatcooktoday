@@ -10,6 +10,10 @@ class RecipesController extends AppController {
     }
 
     public function display($category) {
+        $this->set('title', 'Recipessss');
+        if ($this->Auth->user('user_id')) {
+            $this->viewBuilder()->setLayout('user');
+        }
         $this->paginate = [
             'limit'=> 20
         ];

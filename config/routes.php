@@ -63,6 +63,9 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Home', 'action' => 'display', 'home']);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
+    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
 //    $routes->connect('/recipes', ['controller' => 'Recipes', 'action' => 'display']);
     $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
 
@@ -109,5 +112,12 @@ Router::scope('/recipes', function (RouteBuilder $routes) {
 //    $routes->get('', ['controller' => 'Recipes', 'action' => 'getListRecipePosts'], 'recipes.list');
     $routes->get('/:slug', ['controller' => 'Recipes', 'action' => 'display'], 'recipes.list')->setPass(['slug']);
     $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
+    $routes->fallbacks(DashedRoute::class);
+});
+
+Router::scope('/tip-tricks', function (RouteBuilder $routes) {
+    $routes->setExtensions(['json']);
+    $routes->get('', ['controller' => 'TipTricks', 'action' => 'display'], 'tip-tricks.list');
+//    $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
     $routes->fallbacks(DashedRoute::class);
 });

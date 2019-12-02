@@ -34,7 +34,18 @@
                                     </a>
                                 </div>
                                 <div class="recipe-box-content">
-                                    <h3><a href="<?= 'post/'.$item->permalink ?>" title="<?php echo $item->title ?>"><?php echo $item->title ?></a></h3>
+                                    <h3>
+                                        <a href="<?= 'post/'.$item->permalink ?>" title="<?php echo $item->title ?>">
+                                            <?php echo $this->Text->truncate(
+                                                $item->title,
+                                                30,
+                                                [
+                                                    'ellipsis' => '...',
+                                                    'extract' => false
+                                                ]);
+                                            ?>
+                                        </a>
+                                    </h3>
                                     <h5 class="author-recipe">
                                         <a>
                                             <span>

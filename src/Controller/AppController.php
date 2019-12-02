@@ -48,6 +48,28 @@ class AppController extends Controller
         ]);
         $this->loadComponent('Flash');
 
+        $this->loadComponent('Auth', [
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login',
+            ],
+            'loginRedirect' => [
+                'controller' => 'Recipes',
+                'action' => 'all',
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login',
+            ],
+            'authError' => 'Did you really think you are allowed to see that?',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => ['username' => 'email', 'password' => 'password']
+                ]
+            ],
+            'storage' => 'Session'
+        ]);
+
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -67,6 +89,9 @@ class AppController extends Controller
 
     public function beforeFilter(\Cake\Event\Event $event)
     {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['Recipes', 'display']);
+
         if ($this->request->session()->check('Config.language')) {
             I18n::setLocale($this->request->session()->read('Config.language'));
         } else {
