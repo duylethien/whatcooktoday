@@ -49,24 +49,28 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         $this->loadComponent('Auth', [
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login',
-            ],
-            'loginRedirect' => [
-                'controller' => 'Recipes',
-                'action' => 'all',
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login',
-            ],
+            'loginAction' => '/login',
+            'loginRedirect' => '/',
+            'logoutRedirect' => '/',
+//            'loginAction' => [
+//                'controller' => 'Users',
+//                'action' => 'login',
+//            ],
+//            'loginRedirect' => [
+//                'controller' => 'Recipes',
+//                'action' => 'all',
+//            ],
+//            'logoutRedirect' => [
+//                'controller' => 'Users',
+//                'action' => 'login',
+//            ],
             'authError' => 'Did you really think you are allowed to see that?',
             'authenticate' => [
                 'Form' => [
                     'fields' => ['username' => 'email', 'password' => 'password']
                 ]
             ],
+            'authorize' => 'Controller',
             'storage' => 'Session'
         ]);
 
@@ -97,5 +101,21 @@ class AppController extends Controller
         } else {
             $this->request->session()->write('Config.language', I18n::locale());
         }
+    }
+
+    public function isAuthorized($user = null)
+    {
+        // Any registered user can access public functions
+        if (!$this->request->getParam('prefix')) {
+            return true;
+        }
+
+        // Only admins can access admin functions
+        if ($this->request->getParam('prefix') === 'admin') {
+            return (bool)($user['usergroup_id'] === 1);
+        }
+
+        // Default deny
+        return false;
     }
 }

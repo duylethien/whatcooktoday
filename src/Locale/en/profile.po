@@ -1,0 +1,53 @@
+msgid "profile"
+msgstr "Profile"
+
+msgid "dashboard"
+msgstr "Dashboard"
+
+msgid "my profile"
+msgstr "My Profile"
+
+msgid "my recipes"
+msgstr "My Recipes"
+
+msgid "logout"
+msgstr "Logout"
+
+msgid "public profile"
+msgstr "Public Profile"
+
+msgid "firstname"
+msgstr "First name"
+
+msgid "lastname"
+msgstr "Last name"
+
+msgid "username"
+msgstr "Username"
+
+msgid "email"
+msgstr "Email"
+
+msgid "password"
+msgstr "Password"
+
+msgid "description"
+msgstr "Description"
+
+msgid "country"
+msgstr "Country"
+
+msgid "gender"
+msgstr "Gender"
+
+msgid "female"
+msgstr "Female"
+
+msgid "male"
+msgstr "Male"
+
+msgid "user has been updated"
+msgstr "User has been Updated."
+
+msgid "update profile"
+msgstr "Update profile"

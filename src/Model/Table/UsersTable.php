@@ -12,6 +12,10 @@ class UsersTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->setPrimaryKey('user_id');
+
+        $this->hasOne('Usergroups')
+            ->setBindingKey('user_id')
+            ->setForeignKey('usergroup_id');
     }
 
     public function buildRules(RulesChecker $rules)
@@ -61,6 +65,15 @@ class UsersTable extends Table
 //            // User Zipcode Validation
 //            ->notEmptyString('zipcode')
 //            ->numeric('zipcode','Please enter numeric values');
+
+        return $validator;
+    }
+
+    public function validationUpdate_profile(Validator $validator) {
+        $validator
+            ->notEmptyString('username')
+            ->notEmptyString('firstname')
+            ->notEmptyString('lastname');
 
         return $validator;
     }

@@ -132,15 +132,21 @@ $cakeDescription = 'Nấu gì hôm nay';
                                 <li>
                                     <a href="#" class="dropdown-toggle user-toggle" data-toggle="dropdown" role="button">
                                         <span>
-                                            <?php echo $this->Html->image("users/default.png", [
+                                            <?php if (!$this->request->session()->read('Auth.User.image')) : echo $this->Html->image("users/default.png", [
                                                     "alt" => "Avatar"
                                                 ]);
                                             ?>
+                                            <?php endif ?>
+                                            <?php if ($this->request->session()->read('Auth.User.image')) : echo $this->Html->image('users/' . $this->request->session()->read('Auth.User.image'), [
+                                                "alt" => "Avatar"
+                                            ]);
+                                            ?>
+                                            <?php endif ?>
                                         </span>
                                     </a>
                                     <ul class="user-menu">
-                                        <li><a href="<?php echo ('dashboard') ?>"><i class="fa fa-dashboard"></i> <?php echo ("global_dashboard") ?></a></li>
-                                        <li><a href="<?php echo ('/logout') ?>"><i class="fa fa-power-off"></i> <?php echo ("global_logout") ?></a></li>
+                                        <li><a href="<?php echo ('dashboard') ?>"><i class="fa fa-dashboard"></i> <?= __('dashboard') ?></a></li>
+                                        <li><a href="<?php echo ('/logout') ?>"><i class="fa fa-power-off"></i> <?= __('logout') ?></a></li>
                                     </ul>
                                 </li>
                             </ul>

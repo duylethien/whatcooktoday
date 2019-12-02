@@ -7,13 +7,13 @@ class RecipesController extends AppController {
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
+        if ($this->Auth->user('user_id')) {
+            $this->viewBuilder()->setLayout('user');
+        }
     }
 
     public function display($category) {
         $this->set('title', 'Recipessss');
-        if ($this->Auth->user('user_id')) {
-            $this->viewBuilder()->setLayout('user');
-        }
         $this->paginate = [
             'limit'=> 20
         ];
@@ -27,7 +27,7 @@ class RecipesController extends AppController {
         }
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
-        $recipes->select(['Users.firstname']);
+        $recipes->select(['Users.firstname', 'Users.image']);
         $recipes->select(['Categories.title']);
         $items = $this->paginate($recipes);
 

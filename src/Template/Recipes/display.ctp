@@ -49,10 +49,12 @@
                                     <h5 class="author-recipe">
                                         <a>
                                             <span>
-                                                <?php if ($item->image): ?>
-<!--                                                    <img src="--><?php //echo base_url() ?><!--/cdn/users/--><?php //echo $item->image ?><!--" alt="--><?php //echo $item->username ?><!--">-->
-                                                <?php else: ?>
-<!--                                                    <img src="--><?php //echo base_url() ?><!--/cdn/users/default.png" alt="--><?php //echo $item->username ?><!--">-->
+                                                <?php if (!$item->user['image']): echo $this->Html->image("users/default.png", [
+                                                    "alt" => "Avatar"
+                                                ]);?>
+                                                <?php else: echo $this->Html->image('users/' . $item->user['image'], [
+                                                    "alt" => "Avatar"
+                                                ]);?>
                                                 <?php endif ?>
                                             </span>
                                             <?php echo $item->user['firstname'] ?>

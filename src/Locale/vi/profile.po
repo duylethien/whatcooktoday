@@ -1,0 +1,53 @@
+msgid "profile"
+msgstr "Profile"
+
+msgid "dashboard"
+msgstr "Dashboard"
+
+msgid "my profile"
+msgstr "Thông tin cá nhân"
+
+msgid "my recipes"
+msgstr "Các công thức của tôi"
+
+msgid "logout"
+msgstr "Đăng xuất"
+
+msgid "public profile"
+msgstr "Thông tin công khai"
+
+msgid "firstname"
+msgstr "Tên"
+
+msgid "lastname"
+msgstr "Họ"
+
+msgid "username"
+msgstr "Tên tài khoản"
+
+msgid "email"
+msgstr "Email"
+
+msgid "password"
+msgstr "Mật khẩu"
+
+msgid "description"
+msgstr "Mô tả"
+
+msgid "country"
+msgstr "Quốc gia"
+
+msgid "gender"
+msgstr "Giới tính"
+
+msgid "female"
+msgstr "Nữ"
+
+msgid "male"
+msgstr "Nam"
+
+msgid "user has been updated"
+msgstr "Thông tin đã được cập nhật."
+
+msgid "update profile"
+msgstr "Cập nhật thông tin"

@@ -86,5 +86,57 @@ class UsersController extends AppController {
         return $this->redirect($this->Auth->logout());
     }
 
+    public function profile() {
+        $this->set('title', 'Profile');
+        $this->set('user', $this->request->getSession()->read('Auth.User'));
+    }
+
+    public function dashboard() {
+        $this->set('title', 'Dashboard');
+        $this->viewBuilder()->setLayout('user');
+        $this->set('user', $this->request->getSession()->read('Auth.User'));
+
+        /**
+         * User Profile Update
+         */
+        $Users = TableRegistry::getTableLocator()->get('Users');
+
+        $user_data = $Users->get($this->request->getSession()->read('Auth.User.user_id'));
+        if($this->request->is('put') AND !empty($this->request->getData()) )
+        {
+            // $user_data->accessible('email', FALSE);
+
+            $userdata = $Users->patchEntity($user_data, $this->request->getData(), [
+                'validate' => 'update_profile'
+            ]);
+
+            if ($userdata->errors()) {
+                // Form Validation TRUE
+                $this->Flash->error('Please Fill required fields');
+            } else {
+                $user_data->username    = $this->request->getData('username');
+                $user_data->firstname   = $this->request->getData('firstname');
+                $user_data->lastname = $this->request->getData('lastname');
+                $user_data->description = $this->request->getData('description');
+                $user_data->gender = $this->request->getData('gender');
+
+                // Form Validation FALSE
+                if ($Users->save($user_data)) {
+                    // User Session Update
+                    $this->request->getSession()->write('Auth.User.username', $user_data['username']);
+                    $this->request->getSession()->write('Auth.User.firstname', $user_data['firstname']);
+                    $this->request->getSession()->write('Auth.User.lastname', $user_data['lastname']);
+                    $this->request->getSession()->write('Auth.User.description', $user_data['description']);
+                    $this->request->getSession()->write('Auth.User.gender', $user_data['gender']);
+                    $this->redirect('/dashboard');
+                    $this->Flash->success(__d('profile', 'user has been updated'));
+                }else{
+                    $this->Flash->error(__('Unable to update user!'));
+                }
+            }
+        }
+        $this->set(compact('user_data'));
+        $this->set('_serialize', ['user_data']);
+    }
 
 }
