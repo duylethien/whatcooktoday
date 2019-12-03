@@ -47,15 +47,13 @@
                                         </a>
                                     </h3>
                                     <h5 class="author-recipe">
-                                        <a>
+                                        <a href="<?= '/profile/' . $item->user['user_id'] ?>" title="<?php echo $item->user['firstname'] ?>">
                                             <span>
                                                 <?php if (!$item->user['image']): echo $this->Html->image("users/default.png", [
                                                     "alt" => "Avatar"
-                                                ]);?>
-                                                <?php else: echo $this->Html->image('users/' . $item->user['image'], [
+                                                ]); else: echo $this->Html->image('users/' . $item->user['image'], [
                                                     "alt" => "Avatar"
-                                                ]);?>
-                                                <?php endif ?>
+                                                ]); endif; ?>
                                             </span>
                                             <?php echo $item->user['firstname'] ?>
                                         </a>

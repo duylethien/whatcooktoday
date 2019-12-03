@@ -1,6 +1,10 @@
 <?php
 namespace App\Controller;
 
+use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
+
 class RecipesController extends AppController {
 
     public function initialize()
@@ -27,7 +31,7 @@ class RecipesController extends AppController {
         }
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
-        $recipes->select(['Users.firstname', 'Users.image']);
+        $recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
         $recipes->select(['Categories.title']);
         $items = $this->paginate($recipes);
 
@@ -54,6 +58,9 @@ class RecipesController extends AppController {
 //        $this->RequestHandler->renderAs($this, 'json');
     }
 
+    public function manage() {
+
+    }
 
     public function getListRecipePosts() {
         $this->paginate = [
@@ -73,4 +80,112 @@ class RecipesController extends AppController {
         ]);
         $this->RequestHandler->renderAs($this, 'json');
     }
+
+    public function add() {
+        $this->set('title', 'Add Recipes');
+
+        /**
+         *  Insert Recipes
+         */
+        $recipes = $this->Recipes->newEntity();
+
+        // check post request and data
+        if($this->request->is('post') AND !empty($this->request->getData()) )
+        {
+
+            $recipes = $this->Recipes->patchEntity($recipes, $this->request->getData(), [
+                'validate' => true
+            ]);
+
+            // insert user id in recipes id
+            $recipes->user_id = $this->Auth->user('user_id'); // $this->request->session()->read('Auth.User.id')
+
+            if ($recipes->errors()) {
+                // Form Validation TRUE
+                $this->Flash->error('Please Fill required fields');
+            } else {
+                // Form Validation FALSE
+                if ($this->Recipes->save($recipes))
+                {
+                    $this->redirect('/recipes/add');
+                    $this->Flash->success('Recipes Add Successfully');
+                }else{
+                    $this->Flash->error(__('Unable to add your recipes!'));
+                }
+            }
+        }
+        $this->set(compact('recipes'));
+        $this->set('_serialize', ['recipes']);
+    }
+
+    public function edit($id) {
+        if (!isset($id)) {
+            return $this->redirect('/my-recipes');
+        }
+
+        // set title
+        $this->set('title', 'Edit Recipes');
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+
+        // get article
+        $recipes = $Recipes->get($id,[
+            'conditions' => ['user_id' => $this->request->getSession()->read('Auth.User.user_id')],
+        ]);
+
+        // update article
+        if($this->request->is('put') AND !empty($this->request->getData()))
+        {
+            $recipes->accessible('user_id', FALSE);
+            $recipes->accessible('id', FALSE);
+
+            $update_recipe = $Recipes->patchEntity($recipes, $this->request->getData(), [
+                'validate' => 'update_article'
+            ]);
+
+            $update_recipe->title  = $this->request->getData('title');
+            $update_recipe->permalink   = $this->request->getData('permalink');
+
+            // check validation errors
+            if($update_recipe->errors())
+            {
+                $this->Flash->error(__('Please Fill required fields'));
+            }else{
+                // Form Validation FALSE
+                if($Recipes->save($update_recipe))
+                {
+                    // update success
+                    $this->Flash->success(__('Your Recipes has been Updated.'));
+                    // $this->redirect('/Recipes/Edit/'.$eid);
+                }else{
+                    // update server error
+                    $this->Flash->error(__('Unable to update article!'));
+                }
+            }
+        }
+
+        // set data in template
+        $this->set(compact('recipes'));
+        $this->set('_serialize', ['recipes']);
+    }
+
+    public function delete($id) {
+        if(!isset($id))
+            return $this->redirect('/my-recipes');
+
+        $this->request->allowMethod(['post', 'delete']);
+
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+
+        // get article
+        $recipe = $Recipes->get($id,[
+            'conditions' => ['user_id' => $this->request->getSession()->read('Auth.User.user_id')],
+        ]);
+
+        if ($Recipes->delete($recipe))
+        {
+            $this->Flash->success(__('The article with id: {0} has been deleted.', h($id)));
+            return $this->redirect('/my-recipes');
+        }
+    }
+
 }

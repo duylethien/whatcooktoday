@@ -23,7 +23,8 @@ $cakeDescription = 'Nấu gì hôm nay';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $title ?>
+        <?= $cakeDescription ?>:
+        <?= $this->fetch('title') ?>
     </title>
     <!-- <?= $this->Html->meta('icon') ?> -->
 
@@ -67,12 +68,12 @@ $cakeDescription = 'Nấu gì hôm nay';
                         <div class="user-details">
                             <h3>
                                 <span class="user-status is-online"></span>
-                                <a href="#"><?php echo ('username') ?></a>
+                                <a href="#"><?php echo $this->request->getSession()->read('Auth.User.lastname') ?> <?php echo $this->request->getSession()->read('Auth.User.firstname') ?></a>
                             </h3>
-                            <p class="user-title"><?php echo ('global_Administrator') ?></p>
+                            <p class="user-title"><?php echo ('Administrator') ?></p>
                             <div class="user-links">
-                                <a href="<?php echo ('admin/users/manage/' . ('user_id')) ?>" class="btn btn-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo ('global_Edit_Profile') ?></a>
-                                <a href="<?php echo ('admin/logout') ?>" class="btn btn-success"> <i class="fa fa-sign-out" aria-hidden="true"></i> <?php echo ('global_logout') ?></a>
+                                <a href="<?php echo ('admin/users/manage/' . ('user_id')) ?>" class="btn btn-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo ('Edit Profile') ?></a>
+                                <a href="/logout" class="btn btn-success"> <i class="fa fa-sign-out" aria-hidden="true"></i> <?php echo ('Logout') ?></a>
                             </div>
                         </div>
                     </div>
@@ -86,18 +87,11 @@ $cakeDescription = 'Nấu gì hôm nay';
                 <header class="logo-env">
                     <!-- logo -->
                     <div class="logo">
-                        <?php echo $this->Html->image("lang_en.svg", [
-                            "height" => "20",
-                            "width" => "30",
+                        <?php echo $this->Html->image("icons/logo.png", [
+                            "width" => "100",
                             "alt" => "English"
                         ]);
                         ?>
-                        <!--                        <a href="--><?php //echo site_url('admin/dashboard') ?><!--" class="logo-expanded">-->
-                        <!--                            <img style="width:100px;" src="--><?php //echo base_url() ?><!--/cdn/about/--><?php //echo config('logo') ?><!--" alt="--><?php //echo config('title') ?><!--" />-->
-                        <!--                        </a>-->
-                        <!--                        <a href="--><?php //echo site_url('admin/dashboard') ?><!--" class="logo-collapsed">-->
-                        <!--                            <img src="--><?php //echo base_url() ?><!--/cdn/about/--><?php //echo config('favicon') ?><!--" width="40" alt="--><?php //echo config('title') ?><!--" />-->
-                        <!--                        </a>-->
                     </div>
                     <div class="mobile-menu-toggle visible-xs">
                         <a href="#" data-toggle="mobile-menu">
@@ -114,14 +108,20 @@ $cakeDescription = 'Nấu gì hôm nay';
                     <li>
                         <a href="<?php echo ('admin/dashboard') ?>">
                             <i class="fa-home"></i>
-                            <span class="title"><?php echo ('global_dashboard') ?></span>
+                            <span class="title"><?php echo ('Dashboard') ?></span>
                         </a>
                     </li>
 
                     <li>
                         <a href="<?php echo ('admin/settings') ?>">
                             <i class="fa fa-cogs"></i>
-                            <span class="title"><?php echo ('global_settings') ?></span>
+                            <span class="title"><?php echo ('Settings') ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ('/admin/recipes') ?>">
+                            <i class="fa fa-cutlery"></i>
+                            <span class="title"><?php echo ('Recipes') ?></span>
                         </a>
                     </li>
                 </ul>

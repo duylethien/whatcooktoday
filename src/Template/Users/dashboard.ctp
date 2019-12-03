@@ -6,10 +6,17 @@
             </div>
             <div class="col-md-6">
                 <nav id="breadcrumbs">
-<!--                    <ul>-->
+                    <ul>
+                        <li>
+                            <?php echo $this->Html->link(
+                                'Dashboard',
+                                ['controller' => 'Users', 'action' => 'dashboard', '_full' => true]
+                            );
+                            ?>
+                        </li>
 <!--                        <li><a href="--><?php //echo site_url() ?><!--">--><?php //echo lang('global_home') ?><!--</a></li>-->
-<!--                        <li>--><?php //echo lang('global_Profile') ?><!-- - --><?php //echo $user->firstname ?><!-- --><?php //echo $user->lastname ?><!--</li>-->
-<!--                    </ul>-->
+                        <li><?= __d('profile', 'dashboard') ?> - <?php echo $user['firstname'] ?> <?php echo $user['lastname'] ?></li>
+                    </ul>
                 </nav>
             </div>
         </div>
@@ -44,13 +51,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo ('profile/') ?>">
+                                <a href="<?= '/profile/' . $user['user_id'] ?>">
                                     <i class="fa fa-user"></i>
                                     <span><?= __d('profile', 'my profile') ?></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo ('myrecipes') ?>">
+                                <a href="<?php echo ('my-recipes') ?>">
                                     <i class="icon icon-themeenergy_soup2"></i>
                                     <span><?= __d('profile', 'my recipes') ?></span>
                                 </a>
@@ -88,7 +95,7 @@
                             'firstname'    => ['value' => $user['firstname'], 'required'  => false, 'placeholder' => 'Enter first name', 'label' => ['text' => __d('profile', 'firstname')]],
                             'lastname'     => ['value' => $user['lastname'], 'required'  => false, 'placeholder' => 'Enter last name', 'label' => ['text' => __d('profile', 'lastname')]],
                             'username'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'username')]],
-                            'email'        => ['value' => $user['email'], 'disabled' => true, 'required'  => false, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
+                            'email'        => ['value' => $user['email'], 'required'  => false, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
                             'country'      => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'country')]],
                             'password'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'password')]],
                             'description'  => ['value' => $user['description'], 'type' => 'textarea', 'required'  => false, 'placeholder' => 'Enter description', 'label' => ['text' => __d('profile', 'description')]],

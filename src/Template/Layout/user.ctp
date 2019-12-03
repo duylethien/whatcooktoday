@@ -145,8 +145,8 @@ $cakeDescription = 'Nấu gì hôm nay';
                                         </span>
                                     </a>
                                     <ul class="user-menu">
-                                        <li><a href="<?php echo ('dashboard') ?>"><i class="fa fa-dashboard"></i> <?= __('dashboard') ?></a></li>
-                                        <li><a href="<?php echo ('/logout') ?>"><i class="fa fa-power-off"></i> <?= __('logout') ?></a></li>
+                                        <li><a href="<?php echo ('/dashboard') ?>"><i class="fa fa-dashboard"></i> <?= __d('profile', 'dashboard') ?></a></li>
+                                        <li><a href="<?php echo ('/logout') ?>"><i class="fa fa-power-off"></i> <?= __d('profile','logout') ?></a></li>
                                     </ul>
                                 </li>
                             </ul>

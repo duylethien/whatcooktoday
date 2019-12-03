@@ -3,14 +3,19 @@ namespace App\Controller;
 
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class UsersController extends AppController {
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         // allow this route/action
-        $this->Auth->allow(['signup']);
-
+        $this->Auth->allow(['signup', 'view']);
+        if ($this->Auth->user('user_id')) {
+            $this->viewBuilder()->setLayout('user');
+        } else {
+            $this->viewBuilder()->setLayout('default');
+        }
     }
 
     public function initialize()
@@ -20,10 +25,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
-//        if ($this->Auth->user('id'))
-        $a = false;
-        if ($a)
-        {
+        if ($this->Auth->user('user_id')) {
             // user already login
             return $this->redirect($this->Auth->redirectUrl());
         } else {
@@ -86,9 +88,53 @@ class UsersController extends AppController {
         return $this->redirect($this->Auth->logout());
     }
 
-    public function profile() {
-        $this->set('title', 'Profile');
-        $this->set('user', $this->request->getSession()->read('Auth.User'));
+    public function profile($id) {
+        $this->set('title', 'My Recipes');
+
+        $this->paginate = [
+            'limit'=> 9
+        ];
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+        $recipes = $Recipes->find()
+            ->contain(['Users', 'Categories'])
+            ->where(['Recipes.user_id' => $id])
+            ->andWhere(['Recipes.status' => 'active']);
+
+        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
+        $recipes->select(['Users.firstname', 'Users.image']);
+        $recipes->select(['Categories.title']);
+
+        /////////////////////////////////
+
+        $Users = TableRegistry::getTableLocator()->get('Users');
+        $infoUser = $Users->find()
+            ->where(['Users.user_id' => $id])
+            ->andWhere(['Users.status' => 'active']);
+
+        $infoUser->select([
+            'Users.firstname',
+            'Users.lastname',
+            'Users.username',
+            'Users.email',
+            'Users.description',
+            'Users.image',
+            'Users.usergroup_id',
+            'Users.gender',
+        ]);
+        foreach ($infoUser as $item) {
+            $infoUser = $item;
+        }
+        $infoUser['sum_recipe'] = $recipes->count();
+
+        $items = $this->paginate($recipes);
+
+        $this->set(compact('items', 'infoUser'));
+
+        $this->set([
+            'item' => $recipes,
+            'info' => $infoUser,
+            '_serialize' => ['item', 'info']
+        ]);
     }
 
     public function dashboard() {
@@ -137,6 +183,29 @@ class UsersController extends AppController {
         }
         $this->set(compact('user_data'));
         $this->set('_serialize', ['user_data']);
+    }
+
+    public function manage() {
+        $this->set('title', 'My Recipes');
+
+        $this->paginate = [
+            'limit'=> 7
+        ];
+
+        $user = $this->request->getSession()->read('Auth.User');
+
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+        $recipes = $Recipes->find()
+            ->contain(['Categories'])
+            ->where(['Recipes.user_id' => $user['user_id']]);
+
+        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.status', 'Recipes.permalink']);
+        $recipes->select(['Categories.title']);
+
+        $items = $this->paginate($recipes);
+
+        $this->set(compact('user', 'items'));
+        $this->set('_serialize', ['user', 'items']);
     }
 
 }

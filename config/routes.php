@@ -73,6 +73,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 //    $routes->connect('/recipes', ['controller' => 'Recipes', 'action' => 'display']);
     $routes->connect('/articles', ['controller' => 'Articles', 'action' => 'index']);
 
+    $routes->connect('/profile/*', ['controller' => 'Users', 'action' => 'profile']);
+    $routes->connect('/my-recipes', ['controller' => 'Users', 'action' => 'manage']);
+
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
@@ -116,6 +119,9 @@ Router::scope('/recipes', function (RouteBuilder $routes) {
 //    $routes->get('', ['controller' => 'Recipes', 'action' => 'getListRecipePosts'], 'recipes.list');
     $routes->get('/:slug', ['controller' => 'Recipes', 'action' => 'display'], 'recipes.list')->setPass(['slug']);
     $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
+    $routes->connect('/add', ['controller' => 'Recipes', 'action' => 'add']);
+    $routes->connect('/edit/:id', ['controller' => 'Recipes', 'action' => 'edit'])->setPass(['id']);
+    $routes->connect('/delete/:id', ['controller' => 'Recipes', 'action' => 'delete'])->setPass(['id']);
     $routes->fallbacks(DashedRoute::class);
 });
 
