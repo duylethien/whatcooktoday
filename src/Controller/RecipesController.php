@@ -17,7 +17,7 @@ class RecipesController extends AppController {
     }
 
     public function display($category) {
-        $this->set('title', 'Recipessss');
+        $this->set('title', 'Recipes');
         $this->paginate = [
             'limit'=> 20
         ];
@@ -27,7 +27,7 @@ class RecipesController extends AppController {
             $recipes = $this->Recipes->find()
                 ->contain(['Users', 'Categories'])
                 ->where(['Categories.permalink' => $category])
-                ->andWhere(['Recipes.status' => 'active']);
+                ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
         }
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
@@ -46,7 +46,7 @@ class RecipesController extends AppController {
     public function detail($permalink) {
         $item = $this->Recipes->find()
             ->where(['Recipes.permalink' => $permalink])
-            ->andWhere(['Recipes.status' => 'active'])
+            ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
             ->contain(['Users', 'Categories']);
 
         $this->set(compact('item'));
@@ -60,25 +60,6 @@ class RecipesController extends AppController {
 
     public function manage() {
 
-    }
-
-    public function getListRecipePosts() {
-        $this->paginate = [
-            'limit'=> 20
-        ];
-
-//        $recipes = $this->Recipes->find('all')->contain(['Users', 'Categories'])->hydrate(false);
-        $recipes = $this->Recipes->find('all')->contain(['Users', 'Categories']);
-        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty']);
-        $recipes->select(['Users.firstname']);
-        $recipes->select(['Categories.title']);
-        $recipes = $this->paginate($recipes);
-
-        $this->set([
-            'items' => $recipes,
-            '_serialize' => ['items']
-        ]);
-        $this->RequestHandler->renderAs($this, 'json');
     }
 
     public function add() {

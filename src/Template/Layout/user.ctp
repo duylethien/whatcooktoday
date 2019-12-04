@@ -67,30 +67,16 @@ $cakeDescription = 'Nấu gì hôm nay';
                                 <li><a href=""><?= __('home') ?></a></li>
                                 <li><a href="#"><?= __('categories') ?></a>
                                     <ul class="menu-categories">
-<!--                                        <li>-->
-<!--                                            <a href="" title="--><?//= __('categories') ?><!--">-->
-<!--                                                <i class="--><?//= __('categories') ?><!--"></i>-->
-<!--                                                --><?//= __('categories') ?>
-<!--                                            </a>-->
-<!--                                        </li> -->
-                                        <li>
-                                            <a href="/recipes/cakes" title="cake">
-                                                <i class="Cake"></i>
-                                                Cakes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/recipes/snakes" title="snakes">
-                                                <i class="Snakes"></i>
-                                                Snakes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/recipes/pizza" title="pizza">
-                                                <i class="Pizza"></i>
-                                                Pizza
-                                            </a>
-                                        </li>
+                                        <?php if ($categories ): ?>
+                                            <?php foreach ($categories as $cat): ?>
+                                                <li>
+                                                    <a href="<?php echo ('/recipes/' . ($cat->permalink)) ?>" title="<?php echo $cat->title ?>">
+                                                        <i class="<?php if(!empty($cat['icon']->icon)): echo $cat['icon']->icon; endif; ?>"></i>
+                                                        <?php echo ($cat->title) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </ul>
                                 </li>
                                 <li><a href="/recipes/all"><?= __('recipes') ?></a></li>

@@ -107,10 +107,10 @@
                                 </td>
                                 <td data-title="Category"><span class="adcategories"><?php echo $recipe['category']->title ?></span></td>
                                 <td data-title="Ad Status">
-                                    <?php if (($recipe['status']) == 'active'): ?>
+                                    <?php if (($recipe['status']) == 1): ?>
                                         <span class="adstatus adstatusactive"><?php echo ('Active') ?></span>
-                                    <?php elseif (($recipe['status']) == 'inactive'): ?>
-                                        <span class="adstatus adstatusexpired"><?php echo ('global_inactive') ?></span>
+                                    <?php elseif (($recipe['status']) == 0): ?>
+                                        <span class="adstatus adstatusexpired"><?php echo ('Inactive') ?></span>
                                     <?php endif; ?>
                                 </td>
                                 <td data-title="Action">

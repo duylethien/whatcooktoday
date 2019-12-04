@@ -33,3 +33,6 @@ msgstr "Quên mật khẩu"
 
 msgid "login"
 msgstr "Đăng nhập"
+
+msgid "Dont you have an account"
+msgstr "Bạn chưa có tài khoản"

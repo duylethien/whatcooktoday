@@ -120,9 +120,9 @@
                                             <a ><?php echo $item->category['title'] ?></a>
                                         </div>
                                         <div class="recipe-meta">
-                                            <?php if (($item->difficulty) == 'easy'): ?><i class="ico i-easy"></i> <?= __d('recipes', 'easy') ?><?php endif; ?>
-                                            <?php if (($item->difficulty) == 'medium'): ?><i class="ico i-medium"></i> <?= __d('recipes', 'medium') ?><?php endif; ?>
-                                            <?php if (($item->difficulty) == 'hard'): ?><i class="ico i-hard"></i> <?= __d('recipes', 'hard') ?><?php endif; ?>
+                                            <?php if (($item->difficulty) == 0): ?><i class="ico i-easy"></i> <?= __d('recipes', 'easy') ?><?php endif; ?>
+                                            <?php if (($item->difficulty) == 1): ?><i class="ico i-medium"></i> <?= __d('recipes', 'medium') ?><?php endif; ?>
+                                            <?php if (($item->difficulty) == 2): ?><i class="ico i-hard"></i> <?= __d('recipes', 'hard') ?><?php endif; ?>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>

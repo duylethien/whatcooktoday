@@ -18,6 +18,7 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 
 use Cake\I18n\I18n;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -52,18 +53,6 @@ class AppController extends Controller
             'loginAction' => '/login',
             'loginRedirect' => '/dashboard',
             'logoutRedirect' => '/',
-//            'loginAction' => [
-//                'controller' => 'Users',
-//                'action' => 'login',
-//            ],
-//            'loginRedirect' => [
-//                'controller' => 'Recipes',
-//                'action' => 'all',
-//            ],
-//            'logoutRedirect' => [
-//                'controller' => 'Users',
-//                'action' => 'login',
-//            ],
             'authError' => 'Did you really think you are allowed to see that?',
             'authenticate' => [
                 'Form' => [
@@ -73,6 +62,13 @@ class AppController extends Controller
             'authorize' => 'Controller',
             'storage' => 'Session'
         ]);
+
+        $Categories = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $Categories->find()
+            ->contain(['Icons']);
+
+        $category['categories']=$categories;
+        $this->set($category);
 
         /*
          * Enable the following component for recommended CakePHP security settings.
@@ -94,7 +90,16 @@ class AppController extends Controller
     public function beforeFilter(\Cake\Event\Event $event)
     {
         parent::beforeFilter($event);
+
         $this->Auth->allow(['Recipes', 'display']);
+        $this->Auth->allow(['Recipes', 'detail']);
+        $this->Auth->allow(['Users', 'profile']);
+        $this->Auth->allow(['App', 'changeLanguage']);
+
+        if($this->request->prefix == 'admin') {
+            // Set the layout.
+            $this->viewBuilder()->setLayout('admin');
+        }
 
         if ($this->request->session()->check('Config.language')) {
             I18n::setLocale($this->request->session()->read('Config.language'));

@@ -133,7 +133,9 @@ Router::scope('/tip-tricks', function (RouteBuilder $routes) {
 });
 
 Router::prefix('admin', function (RouteBuilder $routes) {
+    $routes->setExtensions(['json']);
     $routes->connect('/', ['controller' => 'Admin', 'action' => 'index']);
-
+    $routes->connect('/recipes/edit/:id', ['controller' => 'Recipes', 'action' => 'edit'])->setPass(['id']);
+    $routes->connect('/recipes/delete/:id', ['controller' => 'Recipes', 'action' => 'delete'])->setPass(['id']);
     $routes->fallbacks(DashedRoute::class);
 });

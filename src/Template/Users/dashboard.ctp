@@ -95,7 +95,7 @@
                             'firstname'    => ['value' => $user['firstname'], 'required'  => false, 'placeholder' => 'Enter first name', 'label' => ['text' => __d('profile', 'firstname')]],
                             'lastname'     => ['value' => $user['lastname'], 'required'  => false, 'placeholder' => 'Enter last name', 'label' => ['text' => __d('profile', 'lastname')]],
                             'username'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'username')]],
-                            'email'        => ['value' => $user['email'], 'required'  => false, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
+                            'email'        => ['value' => $user['email'],           'required'  => false, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
                             'country'      => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'country')]],
                             'password'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'password')]],
                             'description'  => ['value' => $user['description'], 'type' => 'textarea', 'required'  => false, 'placeholder' => 'Enter description', 'label' => ['text' => __d('profile', 'description')]],

@@ -67,30 +67,16 @@ $cakeDescription = 'Nấu gì hôm nay';
                                 <li><a href=""><?= __('home') ?></a></li>
                                 <li><a href="#"><?= __('categories') ?></a>
                                     <ul class="menu-categories">
-<!--                                        <li>-->
-<!--                                            <a href="" title="--><?//= __('categories') ?><!--">-->
-<!--                                                <i class="--><?//= __('categories') ?><!--"></i>-->
-<!--                                                --><?//= __('categories') ?>
-<!--                                            </a>-->
-<!--                                        </li> -->
-                                        <li>
-                                            <a href="/recipes/cakes" title="cake">
-                                                <i class="Cake"></i>
-                                                Cakes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/recipes/snakes" title="snakes">
-                                                <i class="Snakes"></i>
-                                                Snakes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/recipes/pizza" title="pizza">
-                                                <i class="Pizza"></i>
-                                                Pizza
-                                            </a>
-                                        </li>
+                                    <?php if ($categories ): ?>
+                                        <?php foreach ($categories as $cat): ?>
+                                            <li>
+                                                <a href="<?php echo ('/recipes/' . ($cat->permalink)) ?>" title="<?php echo $cat->title ?>">
+                                                    <i class="<?php if(!empty($cat['icon']->icon)): echo $cat['icon']->icon; endif; ?>"></i>
+                                                    <?php echo ($cat->title) ?>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                     </ul>
                                 </li>
                                 <li><a href="/recipes/all"><?= __('recipes') ?></a></li>
@@ -158,41 +144,41 @@ $cakeDescription = 'Nấu gì hôm nay';
                     <i class="fa fa-times-circle close" aria-hidden="true" data-dismiss="modal"></i>
                     <div class="clearfix"></div><br />
                     <div class="notification error closeable login_errors" style="display: none;"></div>
-                    <form class="popup_login" method="post">
+                    <div class="sdf">
                         <p class="login-icon">
                             <i class="fa fa-user-circle"></i>
                             <b><?= __('welcome') ?>,</b> <?= __('login-to-your-account') ?>.
                         </p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="text" name="email" placeholder="<?= __('Email') ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="password" name="password" placeholder="<?= __('password') ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 text-left">
-                                <label class="check-text" for="user-session-remember-me">
-                                    <input name="remember" type="checkbox" tabindex="4" value="1" checked="checked" />
-                                    <span class="chk-img"></span>
-                                    <a id="remember-button"><?= __('remember_me') ?></a>
-                                </label>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                                <a href="javascript:popup_switch('forgot')" class="forget-pass"><?= __('forget_password') ?></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button type="submit" class="button color big"><?= __('login') ?>
-                                    <i class="fa fa-spin fa-spinner login_loading" style="display: none;"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        <?php
+                        echo $this->Flash->render('message');
+
+                        $this->Form->setTemplates([
+                            'inputContainer' => '<div class="form-group{{required}}"> {{content}} <span class="help">{{help}}</span></div>',
+                            'input' => '<input type="{{type}}" name="{{name}}" class="form-control form-control-danger" {{attrs}}/>',
+                            'inputContainerError' => '<div class="form-group has-danger {{type}}{{required}}">{{content}}{{error}}</div>',
+                            'error' => '<div class="text-danger">{{content}}</div>'
+                        ]);
+
+                        echo $this->Form->create('', ['type' => 'POST', 'url' => [
+                            'controller' => 'Users',
+                            'action' => 'login'
+                        ]]);
+                        echo $this->Form->controls(
+                            [
+                                'email'     => ['required'  => TRUE, 'placeholder' => __('Email'), 'label' => ['text' => __('Email')]],
+                                'password'  => ['required'  => TRUE, 'placeholder' => __('password'), 'label' => ['text' => __('password')]]
+                            ],
+                            [ 'legend' => false]
+                        );
+
+                        echo $this->Form->button('<i class="fa fa-user"></i>'. __('login'),['class' => 'button color big']);
+                        echo $this->Form->end();
+                        ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p class="popup_login"><?php echo __('Dont you have an account') ?>? <a href="/signup"><?php echo ('Register') ?></a>
+                    </p>
                 </div>
             </div>
         </div>

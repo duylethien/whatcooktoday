@@ -72,7 +72,7 @@ $cakeDescription = 'Nấu gì hôm nay';
                             </h3>
                             <p class="user-title"><?php echo ('Administrator') ?></p>
                             <div class="user-links">
-                                <a href="<?php echo ('admin/users/manage/' . ('user_id')) ?>" class="btn btn-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo ('Edit Profile') ?></a>
+                                <a href="/dashboard" class="btn btn-primary"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo ('Edit Profile') ?></a>
                                 <a href="/logout" class="btn btn-success"> <i class="fa fa-sign-out" aria-hidden="true"></i> <?php echo ('Logout') ?></a>
                             </div>
                         </div>
@@ -129,6 +129,18 @@ $cakeDescription = 'Nấu gì hôm nay';
         </div>
         <div class="main-content">
             <?= $this->fetch('content') ?>
+            <footer class="main-footer sticky footer-type-1">
+                <div class="footer-inner">
+                    <div class="footer-text">
+                        <strong><a href="https://elmanawy.info/">Powered By Marwa El-Manawy</a></strong>.
+                    </div>
+                    <div class="go-up">
+                        <a href="#" rel="go-top">
+                            <i class="fa-angle-up"></i>
+                        </a>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 </body>

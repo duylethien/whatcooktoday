@@ -98,7 +98,7 @@ class UsersController extends AppController {
         $recipes = $Recipes->find()
             ->contain(['Users', 'Categories'])
             ->where(['Recipes.user_id' => $id])
-            ->andWhere(['Recipes.status' => 'active']);
+            ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
         $recipes->select(['Users.firstname', 'Users.image']);
@@ -109,7 +109,7 @@ class UsersController extends AppController {
         $Users = TableRegistry::getTableLocator()->get('Users');
         $infoUser = $Users->find()
             ->where(['Users.user_id' => $id])
-            ->andWhere(['Users.status' => 'active']);
+            ->andWhere(['Users.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
 
         $infoUser->select([
             'Users.firstname',
@@ -128,12 +128,12 @@ class UsersController extends AppController {
 
         $items = $this->paginate($recipes);
 
-        $this->set(compact('items', 'infoUser'));
+        $this->set(compact('infoUser', 'items'));
 
         $this->set([
             'item' => $recipes,
             'info' => $infoUser,
-            '_serialize' => ['item', 'info']
+            '_serialize' => ['info', 'item']
         ]);
     }
 
