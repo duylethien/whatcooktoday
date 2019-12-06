@@ -26,6 +26,11 @@ $cakeDescription = 'Nấu gì hôm nay';
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
     <!-- <?= $this->Html->meta('icon') ?> -->
 
     <?= $this->Html->css('bootstrap.css') ?>
@@ -179,6 +184,41 @@ $cakeDescription = 'Nấu gì hôm nay';
                 <div class="modal-footer">
                     <p class="popup_login"><?php echo __('Dont you have an account') ?>? <a href="/signup"><?php echo ('Register') ?></a>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="footer-about margin-bottom-40">
+                        <?php echo $this->Html->image("icons/logo.png", [
+                            "max-width" => "200",
+                            "alt" => "Logo"
+                        ]);
+                        ?>
+<!--                        <p>--><?php //echo ('description') ?><!--</p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <p><?php echo ('2019 Gusto') ?>. Powered By <i class="fa fa-heart co-red"></i> <a href="https://www.facebook.com/duy.lethien.52">Duy Le Thien</a>.</p>
+                </div>
+                <div class="col-md-8">
+<!--                    --><?php //$pages = $this->db->get('pages')->result(); ?>
+<!--                    --><?php //if ($pages): ?>
+<!--                        <ul class="pages-links list-inline">-->
+<!--                            --><?php //foreach ($pages as $page): ?>
+<!--                                <li><a href="--><?php //echo site_url('page/' . urlencode($page->permalink)) ?><!--">--><?php //echo $page->title ?><!--</a></li>-->
+<!--                            --><?php //endforeach; ?>
+<!--                        </ul>-->
+<!--                    --><?php //endif ?>
                 </div>
             </div>
         </div>

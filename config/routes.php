@@ -116,12 +116,14 @@ Router::scope('/', function (RouteBuilder $routes) {
  */
 Router::scope('/recipes', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
-//    $routes->get('', ['controller' => 'Recipes', 'action' => 'getListRecipePosts'], 'recipes.list');
+    $routes->connect('/', ['controller' => 'Recipes', 'action' => 'index']);
     $routes->get('/:slug', ['controller' => 'Recipes', 'action' => 'display'], 'recipes.list')->setPass(['slug']);
     $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
     $routes->connect('/add', ['controller' => 'Recipes', 'action' => 'add']);
     $routes->connect('/edit/:id', ['controller' => 'Recipes', 'action' => 'edit'])->setPass(['id']);
     $routes->connect('/delete/:id', ['controller' => 'Recipes', 'action' => 'delete'])->setPass(['id']);
+    $routes->connect('/search/', ['controller' => 'Recipes', 'action' => 'search']);
+
     $routes->fallbacks(DashedRoute::class);
 });
 

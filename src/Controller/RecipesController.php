@@ -16,6 +16,33 @@ class RecipesController extends AppController {
         }
     }
 
+    public function index() {
+        $this->set('title', 'Recipes');
+        $this->paginate = [
+            'limit'=> 20
+        ];
+        $keyword = $this->request->getQuery('keyword');
+        $category = $this->request->getQuery('category');
+        $recipes = $this->Recipes->find()
+            ->contain(['Users', 'Categories'])
+            ->where(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
+            ->where(['Categories.permalink' => $category])
+            ->andWhere(['Recipes.title LIKE' => '%'.$keyword.'%']);
+        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
+        $recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
+        $recipes->select(['Categories.title']);
+        $items = $this->paginate($recipes);
+
+        $this->set(compact('items'));
+
+        $this->set([
+            'item' => $recipes,
+            'keyword' => $keyword,
+            '_serialize' => ['item', 'keyword']
+        ]);
+    }
+
+
     public function display($category) {
         $this->set('title', 'Recipes');
         $this->paginate = [
@@ -167,6 +194,20 @@ class RecipesController extends AppController {
             $this->Flash->success(__('The article with id: {0} has been deleted.', h($id)));
             return $this->redirect('/my-recipes');
         }
+    }
+
+    public function search() {
+//        $this->request->allowMethod('ajax');
+        $this->viewBuilder()->setLayout('format');
+        $keyword = $this->request->getQuery('keyword');
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+        $query = $Recipes->find('all',[
+            'conditions' => ['title LIKE'=>'%'.$keyword.'%'],
+            'order' => ['Recipes.recipe_id'=>'DESC'],
+            'limit' => 10
+        ]);
+        $this->set('recipes', $this->paginate($query));
+        $this->set('_serialize', ['recipes']);
     }
 
 }
