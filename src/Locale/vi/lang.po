@@ -1,0 +1,24 @@
+msgid "no_recipes"
+msgstr "Không có công thức nào!"
+
+msgid "search_for_recipe"
+msgstr "Tìm kiếm công thức"
+
+msgid "search_by_keyword"
+msgstr "Tìm kiếm theo từ khóa"
+
+msgid "search_results"
+msgstr "Kết quả tìm kiếm"
+
+msgid "search_result_for"
+msgstr "Kết quả tìm kiếm cho"
+
+msgid "in_category"
+msgstr "trong thể loại"
+
+msgid "no_results"
+msgstr "Không có kết quả nào được tìm thầy, vui lòng chọng từ khóa khác."
+
+msgid "duyyyyyyy"
+msgstr "sdfdf sdfsd!"
+

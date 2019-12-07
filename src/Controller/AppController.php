@@ -79,10 +79,10 @@ class AppController extends Controller
 
     public function changeLanguage($language = null) {
         if ($language != null && in_array($language, [\App\Model\Enum\ELanguage::EN, \App\Model\Enum\ELanguage::VI])) {
-            $this->request->session()->write('Config.language', $language);
+            $this->request->getSession()->write('Config.language', $language);
             return $this->redirect($this->referer());
         } else {
-            $this->request->session()->write('Config.language', I18n::locale());
+            $this->request->getSession()->write('Config.language', I18n::getLocale());
             return $this->redirect($this->referer());
         }
     }
@@ -91,9 +91,9 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
-        $this->Auth->allow(['Recipes', 'display']);
+        $this->Auth->allow(['Home', 'index']);
+        $this->Auth->allow(['Recipes', 'index']);
         $this->Auth->allow(['Recipes', 'detail']);
-        $this->Auth->allow(['Recipes', 'search']);
         $this->Auth->allow(['Users', 'profile']);
         $this->Auth->allow(['App', 'changeLanguage']);
 
@@ -102,10 +102,10 @@ class AppController extends Controller
             $this->viewBuilder()->setLayout('admin');
         }
 
-        if ($this->request->session()->check('Config.language')) {
-            I18n::setLocale($this->request->session()->read('Config.language'));
+        if ($this->request->getSession()->check('Config.language')) {
+            I18n::setLocale($this->request->getSession()->read('Config.language'));
         } else {
-            $this->request->session()->write('Config.language', I18n::locale());
+            $this->request->getSession()->write('Config.language', I18n::getLocale());
         }
     }
 

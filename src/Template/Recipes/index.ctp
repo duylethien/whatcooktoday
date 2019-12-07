@@ -10,21 +10,21 @@
 <div class="search-container">
     <div class="container">
         <div id="advanced-search">
-            <form class="row" action="<?php echo ('/recipes/all') ?>" method="get">
+            <form class="row" action="<?php echo ('/recipes') ?>" method="get">
                 <div class="col-md-4">
                     <div class="select">
-                        <select name="category_id" class="chosen-select-no-single" style="display: none;">
+                        <select name="category" class="chosen-select-no-single" style="display: none;">
                             <option value="">Choose All Categories</option>
                             <?php foreach ($categories as $item): ?>
-                                <option value= "<?= $item->category_id ?>"><?= $item->title ?></option>
+                                <option value= "<?= $item->permalink ?>" <?php if(isset($filters['category']) && ($filters['category'] == $item->permalink) ): echo 'selected'; endif;?>><?= $item->title ?></option>
                             <?php endforeach;?>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="search-by-keyword">
-                        <button type="submit"><span><?php echo ('global_Search_for_Recipes') ?></span><i class="fa fa-search"></i></button>
-                        <input class="search-field" type="text" name="title" value="<?php echo ('title') ?>" placeholder="<?php echo ('global_Search_by_keyword') ?>"/>
+                        <button type="submit"><span><?php echo __d('lang','search_for_recipe') ?></span><i class="fa fa-search"></i></button>
+                        <input class="search-field" type="text" name="title" value="<?php if(isset($filters['title'])): echo $filters['title']; endif;?>" placeholder="<?php echo __d('lang','search_by_keyword') ?>"/>
                     </div>
                 </div>
             </form>
@@ -34,13 +34,25 @@
 </div>
 <div class="container margin-top-35">
     <div class="row">
-        <?php /* $this->form->control('search')*/?>
         <div class="clearfix"></div>
         <div class="col-md-12">
-            <h3 class="headline"><?= __d('recipes', 'all-recipes') ?></h3>
+            <h3 class="headline">
+                <?php if(empty($filters)): echo __d('recipes','all-recipes'); elseif(!isset($filters['title'])): echo __d('default','categories'); else: echo __d('lang','search_results'); endif;?>
+            </h3>
             <span class="line margin-bottom-35"></span>
             <div class="clearfix"></div>
         </div>
+        <div class="clearfix"></div>
+        <?php if(!empty($filters) && isset($filters['title'])): ?>
+            <div class="col-md-12">
+                <div class="search-result-message"><?php echo __d('lang','search_result_for') ?>: <b><?php echo $filters['title'] ?> </b> <?php if(isset($filters['category'])): ?> <?php echo __d('lang','in_category') ?>: <b><?php echo $filters['category'] ?><?php endif ?> </div>
+                <?php if (!$items): ?>
+                    <div class="search-result-message error">
+                        <?php echo __d('lang','no_results') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif;?>
         <div class="clearfix"></div>
         <div class="col-md-12 table-content">
             <div class="row">
@@ -49,7 +61,7 @@
                         <div class="col-md-3">
                             <div class="recipe-box">
                                 <div class="thumbnail-holder">
-                                    <a href="<?= 'post/'.$item->permalink ?>" >
+                                    <a href="<?= '/recipes/post/'.$item->permalink ?>" >
                                        <?php echo $this->Html->image('recipes/'.$item->featured_image, [
                                             "alt" => $item->title
                                             ]);
@@ -99,7 +111,7 @@
                 <?php else: ?>
                     <div class="col-md-12">
                         <div class="notification notice">
-                            <p><?php echo lang('global_There_is_no_recipes') ?></p>
+                            <p><?= __d('lang','Không có công thức!') ?></p>
                         </div>
                     </div>
                 <?php endif ?>
@@ -135,22 +147,4 @@
     </div>
 </div>
 <script>
-    $('document').ready(function(){
-        $('#search').keyup(function(){
-            var searchkey = $(this).val();
-            searchTags( searchkey );
-        });
-        function searchTags( keyword ){
-            var data = keyword;
-            $.ajax({
-                method: 'get',
-                url : "<?php echo $this->Url->build( [ 'controller' => 'Recipes', 'action' => 'search' ] ); ?>",
-                data: {keyword:data},
-                success: function( response )
-                {
-                    $( '.table-content' ).html(response);
-                }
-            });
-        };
-    });
 </script>

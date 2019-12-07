@@ -64,13 +64,13 @@ $cakeDescription = 'Nấu gì hôm nay';
                     <div class="col-md-9 navigation">
                         <nav id="navigation" class="menu nav-collapse">
                             <ul>
-                                <li><a href=""><?= __('home') ?></a></li>
+                                <li><a href="/"><?= __('home') ?></a></li>
                                 <li><a href="#"><?= __('categories') ?></a>
                                     <ul class="menu-categories">
                                         <?php if ($categories ): ?>
                                             <?php foreach ($categories as $cat): ?>
                                                 <li>
-                                                    <a href="<?php echo ('/recipes/' . ($cat->permalink)) ?>" title="<?php echo $cat->title ?>">
+                                                    <a href="<?php echo ('/recipes?category=' . ($cat->permalink)) ?>" title="<?php echo $cat->title ?>">
                                                         <i class="<?php if(!empty($cat['icon']->icon)): echo $cat['icon']->icon; endif; ?>"></i>
                                                         <?php echo ($cat->title) ?>
                                                     </a>
@@ -79,7 +79,7 @@ $cakeDescription = 'Nấu gì hôm nay';
                                         <?php endif; ?>
                                     </ul>
                                 </li>
-                                <li><a href="/recipes/all"><?= __('recipes') ?></a></li>
+                                <li><a href="/recipes"><?= __('recipes') ?></a></li>
                                 <li><a href="/tip-tricks"><?= __('tip-and-tricks') ?></a></li>
                                 <li><a href=""><?= __('contact-us') ?></a></li>
                                 <li>

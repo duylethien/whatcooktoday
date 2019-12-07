@@ -1,2 +1,0 @@
-msgid "browse-recipes"
-msgstr "Browse Recipes"

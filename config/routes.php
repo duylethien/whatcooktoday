@@ -64,7 +64,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      */
     $routes->setExtensions(['json']);
 
-    $routes->connect('/', ['controller' => 'Home', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Home', 'action' => 'index']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
@@ -117,12 +117,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 Router::scope('/recipes', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
     $routes->connect('/', ['controller' => 'Recipes', 'action' => 'index']);
-    $routes->get('/:slug', ['controller' => 'Recipes', 'action' => 'display'], 'recipes.list')->setPass(['slug']);
     $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
     $routes->connect('/add', ['controller' => 'Recipes', 'action' => 'add']);
     $routes->connect('/edit/:id', ['controller' => 'Recipes', 'action' => 'edit'])->setPass(['id']);
     $routes->connect('/delete/:id', ['controller' => 'Recipes', 'action' => 'delete'])->setPass(['id']);
-    $routes->connect('/search/', ['controller' => 'Recipes', 'action' => 'search']);
 
     $routes->fallbacks(DashedRoute::class);
 });

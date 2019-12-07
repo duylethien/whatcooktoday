@@ -21,52 +21,48 @@ class RecipesController extends AppController {
         $this->paginate = [
             'limit'=> 20
         ];
-        $keyword = $this->request->getQuery('keyword');
+
+        $title = $this->request->getQuery('title');
         $category = $this->request->getQuery('category');
+        $filters = [];
+        if (isset($title) && !empty($title)) {
+            $filters['title'] = $title;
+        }
+        if (isset($category) && !empty($category)) {
+            $filters['category'] = $category;
+        }
         $recipes = $this->Recipes->find()
             ->contain(['Users', 'Categories'])
-            ->where(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
-            ->where(['Categories.permalink' => $category])
-            ->andWhere(['Recipes.title LIKE' => '%'.$keyword.'%']);
-        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
-        $recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
-        $recipes->select(['Categories.title']);
-        $items = $this->paginate($recipes);
+            ->where(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
 
-        $this->set(compact('items'));
-
-        $this->set([
-            'item' => $recipes,
-            'keyword' => $keyword,
-            '_serialize' => ['item', 'keyword']
-        ]);
-    }
-
-
-    public function display($category) {
-        $this->set('title', 'Recipes');
-        $this->paginate = [
-            'limit'=> 20
-        ];
-        if ($category == 'all') {
-            $recipes = $this->Recipes->find('all')->contain(['Users', 'Categories']);
+        foreach ($filters as $key => $val) {
+            if (!isset($val)) {
+                continue;
+            }
+            switch ($key) {
+                case 'category':
+                    $recipes->where(['Categories.permalink' => $val]);
+                    break;
+                case 'title':
+                    $recipes->where(['LOWER(Recipes.title) LIKE' => '%'.strtolower($val).'%']);
+                    break;
+            }
+        }
+        if ($recipes->count() != 0) {
+            $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
+            $recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
+            $recipes->select(['Categories.title']);
+            $items = $this->paginate($recipes);
         } else {
-            $recipes = $this->Recipes->find()
-                ->contain(['Users', 'Categories'])
-                ->where(['Categories.permalink' => $category])
-                ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
+            $items = null;
         }
 
-        $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
-        $recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
-        $recipes->select(['Categories.title']);
-        $items = $this->paginate($recipes);
-
         $this->set(compact('items'));
 
         $this->set([
             'item' => $recipes,
-            '_serialize' => ['item']
+            'filters' => $filters,
+            '_serialize' => ['item', 'filters' ]
         ]);
     }
 
