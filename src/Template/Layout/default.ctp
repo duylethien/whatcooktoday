@@ -58,7 +58,12 @@ $cakeDescription = 'Nấu gì hôm nay';
                 <div class="row">
                     <div class="col-md-3">
                         <div id="logo">
-                            <a href="http://gusto.localhost/"><img src="http://gusto.localhost//cdn/about/logo.png" alt="Gusto Recipes CMS" title="Gusto Recipes CMS"></a>
+                            <a href="/home">
+                                <?php echo $this->Html->image("icons/logo.png", [
+                                    "alt" => "Gusto Recipes"
+                                ]);
+                                ?>
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-9 navigation">
