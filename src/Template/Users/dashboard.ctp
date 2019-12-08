@@ -57,11 +57,19 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo ('my-recipes') ?>">
+                                <a href="<?php echo ('/my-recipes') ?>">
                                     <i class="icon icon-themeenergy_soup2"></i>
                                     <span><?= __d('profile', 'my recipes') ?></span>
                                 </a>
                             </li>
+                            <?php if ($user['usergroup_id'] == 1): ?>
+                            <li>
+                                <a href="<?php echo ('/admin/') ?>">
+                                    <i class="fa fa-user-secret"></i>
+                                    <span><?= __d('profile', 'Trang Admin') ?></span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
                             <li>
                                 <a href="<?php echo ('logout') ?>">
                                     <i class="fa fa-sign-out"></i>
@@ -89,7 +97,7 @@
                         'legend' => null,
                     ]);
 
-                    echo $this->Form->create($user_data);
+                    echo $this->Form->create($user_data, ['enctype' => 'multipart/form-data']);
                     echo $this->Form->controls(
                         [
                             'firstname'    => ['value' => $user['firstname'], 'required'  => false, 'placeholder' => 'Enter first name', 'label' => ['text' => __d('profile', 'firstname')]],
@@ -100,8 +108,14 @@
                             'password'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'password')]],
                             'description'  => ['value' => $user['description'], 'type' => 'textarea', 'required'  => false, 'placeholder' => 'Enter description', 'label' => ['text' => __d('profile', 'description')]],
                             'gender'  => ['type' => 'radio', 'options' => [__d('profile', 'female'), __d('profile', 'male')], 'value' => $user['gender'], 'label' => ['text' => __d('profile', 'gender')] ],
+                            'file' => ['type' => 'file', 'class' => 'form-control', 'label' => ['text' => __d('profile', 'Ảnh đại diện')]]
                         ]
                     );
+                    if (!$user['image']) {
+                        echo $this->Html->image("users/default.png", ["alt" => "Avatar"]);
+                    } else {
+                        echo $this->Html->image('users/' . $user['image'], ["alt" => "Avatar"]);
+                    }
 //                    echo $this->Form->radio('gender', ['Masculine', 'Feminine', 'Neuter'], ['value' => 0]);
 
                     echo $this->Form->button('<i class="fa fa-user"></i>'. __d('profile', 'update profile'),['class' => 'button color add_ingredient', 'style' => 'margin-left: 15px;']);

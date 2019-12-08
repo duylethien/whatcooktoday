@@ -138,6 +138,9 @@ class UsersController extends AppController {
     }
 
     public function dashboard() {
+        $file = $this->request->data(['file']);
+//        dd($duy);
+        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/users/' . $file['name']);
         $this->set('title', 'Dashboard');
         $this->viewBuilder()->setLayout('user');
         $this->set('user', $this->request->getSession()->read('Auth.User'));

@@ -86,7 +86,7 @@ $cakeDescription = 'Nấu gì hôm nay';
                                 </li>
                                 <li><a href="/recipes"><?= __('recipes') ?></a></li>
                                 <li><a href="/tip-tricks"><?= __('tip-and-tricks') ?></a></li>
-                                <li><a href=""><?= __('contact-us') ?></a></li>
+<!--                                <li><a href="">--><?//= __('contact-us') ?><!--</a></li>-->
                                 <li>
                                     <a class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <?php switch (\Cake\I18n\I18n::getLocale()) {

@@ -94,6 +94,8 @@ class AppController extends Controller
         $this->Auth->allow(['Home', 'index']);
         $this->Auth->allow(['Recipes', 'index']);
         $this->Auth->allow(['Recipes', 'detail']);
+        $this->Auth->allow(['TipTricks', 'index']);
+        $this->Auth->allow(['TipTricks', 'detail']);
         $this->Auth->allow(['Users', 'profile']);
         $this->Auth->allow(['App', 'changeLanguage']);
 

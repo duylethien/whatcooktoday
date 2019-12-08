@@ -67,16 +67,28 @@ class RecipesController extends AppController {
     }
 
     public function detail($permalink) {
-        $item = $this->Recipes->find()
+        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+        $recipes = $Recipes->find()
             ->where(['Recipes.permalink' => $permalink])
             ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
             ->contain(['Users', 'Categories']);
+        foreach ($recipes as $item) {
+            $recipe = $item;
+        }
 
-        $this->set(compact('item'));
+        $popular_recipes = $Recipes->find()
+            ->contain(['Categories'])
+            ->where(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
+            ->limit(4)
+            ->order(['visited' => 'DESC']);
+        $popular_recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.visited', 'Recipes.permalink']);
+        $popular_recipes->select(['Categories.title']);
+
+        $this->set(compact('recipe', 'popular_recipes'));
 
         $this->set([
-            'item' => $item,
-            '_serialize' => ['item']
+            'recipe' => $recipe,
+            '_serialize' => ['recipe']
         ]);
 //        $this->RequestHandler->renderAs($this, 'json');
     }

@@ -127,8 +127,8 @@ Router::scope('/recipes', function (RouteBuilder $routes) {
 
 Router::scope('/tip-tricks', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
-    $routes->get('', ['controller' => 'TipTricks', 'action' => 'display'], 'tip-tricks.list');
-//    $routes->get('/post/:slug', ['controller' => 'Recipes', 'action' => 'detail'], 'recipes.detail')->setPass(['slug']);
+    $routes->get('', ['controller' => 'TipTricks', 'action' => 'index'], 'tip-tricks.list');
+    $routes->get('/:slug', ['controller' => 'TipTricks', 'action' => 'detail'], 'tip-tricks.detail')->setPass(['slug']);
     $routes->fallbacks(DashedRoute::class);
 });
 

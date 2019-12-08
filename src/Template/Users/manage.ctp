@@ -57,11 +57,19 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo ('my-recipes') ?>">
+                                <a href="<?php echo ('/my-recipes') ?>">
                                     <i class="icon icon-themeenergy_soup2"></i>
                                     <span><?= __d('profile', 'my recipes') ?></span>
                                 </a>
                             </li>
+                            <?php if ($user['usergroup_id'] == 1): ?>
+                                <li>
+                                    <a href="<?php echo ('/admin/') ?>">
+                                        <i class="fa fa-user-secret"></i>
+                                        <span><?= __d('profile', 'Trang Admin') ?></span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                             <li>
                                 <a href="<?php echo ('logout') ?>">
                                     <i class="fa fa-sign-out"></i>

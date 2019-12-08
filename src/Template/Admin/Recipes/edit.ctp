@@ -54,10 +54,12 @@
                 'ingredients'  => ['required'  => true, 'type' => 'textarea', 'placeholder' => 'Enter Article Description', 'label' => ['class'=> 'form-control-label', 'text' => 'Ingredients'], 'rows' => '10', 'cols' => '15'],
                 'meta_description'  => ['required'  => false, 'type' => 'textarea', 'placeholder' => 'Enter Article Description', 'label' => ['class'=> 'form-control-label', 'text' => 'Meta Description'], 'rows' => '10', 'cols' => '15'],
                 'status'  => ['required'  => true, 'type' => 'radio', 'options' => ['Inactive', 'Active'], 'value' => $recipes['status'], 'label' => ['text' => 'Status']],
+                'file' => ['type' => 'file', 'class' => 'form-control']
             ],
             [ 'legend' => false]
         );
 
+        echo $this->Form->file('file', ['class' => 'form-control']);
 //        echo $this->Form->select('gender', $options);
         echo $this->Form->button('<i class="fa fa-plus-circle"></i> Update Recipes',['class' => 'btn btn-success']);
         echo $this->Form->end();
