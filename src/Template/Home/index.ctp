@@ -93,12 +93,14 @@
         <div class="col-md-3">
             <!-- Tips and Tricks -->
             <div class="widget">
-                <h4 class="headline"><?php echo ('Tips & Tricks') ?></h4>
+                <h4 class="headline"><?php echo ('Những bài Tips & Tricks được xem nhiều nhất') ?></h4>
                 <span class="line margin-bottom-20"></span>
                 <div class="clearfix"></div>
                 <ul class="categories">
+                    <?php foreach ($popular as $item): ?>
+                        <li><a href="<?php echo ('/tip-tricks/' . ($item->permalink)) ?>"><?php if (strlen($item->title) > 35): ?> <?php echo substr($item->title, 0, 35) . ".."; ?> <?php else: ?> <?php echo $item->title; ?> <?php endif ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
-                <div class="clearfix"></div>
             </div>
             <!-- Popular Recipes -->
             <div class="widget">

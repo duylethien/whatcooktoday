@@ -26,6 +26,12 @@ class HomeController extends AppController {
     public function index() {
         $this->set('title', 'Home');
 
+        $Blogs = TableRegistry::getTableLocator()->get('Blogs');
+
+        $popular = $Blogs->find()
+            ->limit(8)
+            ->order(['visits' => 'DESC']);
+
         $Users = TableRegistry::getTableLocator()->get('Users');
         $users = $Users->find()
             ->where(['status' => (\App\Model\Enum\EStatus::ACTIVE)])
@@ -54,7 +60,7 @@ class HomeController extends AppController {
         $popular_recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.visited', 'Recipes.permalink']);
         $popular_recipes->select(['Categories.title']);
 
-        $this->set(compact('items', 'users'));
+        $this->set(compact('items', 'users', 'popular'));
 
         $this->set([
             'item' => $new_recipes,
