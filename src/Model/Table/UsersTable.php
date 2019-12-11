@@ -73,7 +73,7 @@ class UsersTable extends Table
         $validator
             ->notEmptyString('username')
             ->notEmptyString('firstname')
-            ->notEmptyString('lastname');
+            ->allowEmptyString('lastname');
 
         return $validator;
     }

@@ -6,10 +6,21 @@ use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 class RecipesController extends AppController {
+    public function beforeFilter(\Cake\Event\Event $event)
+    {
+//        parent::beforeFilter($event);
+//
+//        if ($this->request->param('action') === 'imageUpload') {
+//            $this->eventManager()->off($this->Csrf);
+//        }
+
+        $this->getEventManager()->off($this->Csrf);
+    }
 
     public function initialize()
     {
         parent::initialize();
+        $this->loadComponent('Csrf');
         $this->loadComponent('RequestHandler');
         if ($this->Auth->user('user_id')) {
             $this->viewBuilder()->setLayout('user');
@@ -93,12 +104,12 @@ class RecipesController extends AppController {
 //        $this->RequestHandler->renderAs($this, 'json');
     }
 
-    public function manage() {
-
-    }
-
     public function add() {
         $this->set('title', 'Add Recipes');
+        $this->set('user', $this->request->getSession()->read('Auth.User'));
+
+        $Categories = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $Categories->find('all');
 
         /**
          *  Insert Recipes
@@ -106,11 +117,9 @@ class RecipesController extends AppController {
         $recipes = $this->Recipes->newEntity();
 
         // check post request and data
-        if($this->request->is('post') AND !empty($this->request->getData()) )
-        {
-
+        if($this->request->is('post') AND !empty($this->request->getData()) ) {
             $recipes = $this->Recipes->patchEntity($recipes, $this->request->getData(), [
-                'validate' => true
+                'validate' => 'default'
             ]);
 
             // insert user id in recipes id
@@ -121,32 +130,37 @@ class RecipesController extends AppController {
                 $this->Flash->error('Please Fill required fields');
             } else {
                 // Form Validation FALSE
-                if ($this->Recipes->save($recipes))
-                {
+                if ($this->Recipes->save($recipes)) {
                     $this->redirect('/recipes/add');
                     $this->Flash->success('Recipes Add Successfully');
-                }else{
+                } else {
                     $this->Flash->error(__('Unable to add your recipes!'));
                 }
             }
         }
-        $this->set(compact('recipes'));
-        $this->set('_serialize', ['recipes']);
+        $this->set(compact('recipes', 'categories'));
+        $this->set([
+            'recipes' => $recipes,
+            'categories' => $categories,
+            '_serialize' => ['recipes', 'categories']
+        ]);
     }
 
     public function edit($id) {
         if (!isset($id)) {
             return $this->redirect('/my-recipes');
         }
+        $this->set('user', $this->request->getSession()->read('Auth.User'));
 
         // set title
         $this->set('title', 'Edit Recipes');
         $Recipes = TableRegistry::getTableLocator()->get('Recipes');
 
+        $Categories = TableRegistry::getTableLocator()->get('Categories');
+        $categories = $Categories->find('all');
+
         // get article
-        $recipes = $Recipes->get($id,[
-            'conditions' => ['user_id' => $this->request->getSession()->read('Auth.User.user_id')],
-        ]);
+        $recipes = $Recipes->get($id);
 
         // update article
         if($this->request->is('put') AND !empty($this->request->getData()))
@@ -155,33 +169,52 @@ class RecipesController extends AppController {
             $recipes->accessible('id', FALSE);
 
             $update_recipe = $Recipes->patchEntity($recipes, $this->request->getData(), [
-                'validate' => 'update_article'
+                'validate' => 'default'
             ]);
 
-            $update_recipe->title  = $this->request->getData('title');
-            $update_recipe->permalink   = $this->request->getData('permalink');
-
-            // check validation errors
-            if($update_recipe->errors())
-            {
+            if($update_recipe->errors()) {
                 $this->Flash->error(__('Please Fill required fields'));
-            }else{
-                // Form Validation FALSE
-                if($Recipes->save($update_recipe))
-                {
-                    // update success
+            } else {
+                $update_recipe->category_id  = $this->request->getData('category_id');
+                $update_recipe->title  = $this->request->getData('title');
+                $update_recipe->permalink   = $this->request->getData('permalink');
+                $update_recipe->difficulty   = $this->request->getData('difficulty');
+                $update_recipe->preapare_time   = $this->request->getData('preapare_time');
+                $update_recipe->cooking_time   = $this->request->getData('cooking_time');
+                $update_recipe->serves   = $this->request->getData('serves');
+                $update_recipe->calories   = $this->request->getData('calories');
+                $update_recipe->description   = $this->request->getData('description');
+                $update_recipe->status   = $this->request->getData('status');
+                $update_recipe->video   = $this->request->getData('video');
+                $update_recipe->directions    = $this->request->getData('directions');
+                $update_recipe->ingredients    = $this->request->getData('ingredients');
+                $update_recipe->meta_description    = $this->request->getData('meta_description');
+                $update_recipe->gallery = json_encode($_POST["gallery"]);
+
+                $file = $this->request->getData(['featured_image']);
+                if (!empty($file['tmp_name'])) {
+                    try {
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/recipes/' . $file['name']);
+                        $update_recipe->featured_image = $file['name'];
+                    } catch (\Exception $e) {
+                        $this->Flash->error($e);
+                    }
+                }
+
+                if ($Recipes->save($update_recipe)) {
                     $this->Flash->success(__('Your Recipes has been Updated.'));
-                    // $this->redirect('/Recipes/Edit/'.$eid);
                 }else{
-                    // update server error
                     $this->Flash->error(__('Unable to update article!'));
                 }
             }
         }
 
-        // set data in template
-        $this->set(compact('recipes'));
-        $this->set('_serialize', ['recipes']);
+        $this->set(compact('recipes', 'categories'));
+        $this->set([
+            'recipes' => $recipes,
+            'categories' => $categories,
+            '_serialize' => ['recipes', 'categories']
+        ]);
     }
 
     public function delete($id) {
@@ -216,6 +249,27 @@ class RecipesController extends AppController {
         ]);
         $this->set('recipes', $this->paginate($query));
         $this->set('_serialize', ['recipes']);
+    }
+
+    public function imageUpload() {
+        $files = $this->request->getData(['file']);
+        $passed_files=[];
+        $errors = 0;
+//        dd($file);
+        foreach ($files as $idx => $file) {
+            if (!empty($file['tmp_name'])) {
+                try {
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/recipes/' . "IRecipes_".$file['name']);
+                    $passed_files[] = "IRecipes_" . $file['name'];
+                } catch (\Exception $e) {
+                    $errors++;
+                }
+            }
+        }
+        if ($errors == count($files))
+            die(json_encode(["error" => true, "message" => 'lỗi rồi']));
+        else
+            die(json_encode(["error" => false, "files" => $passed_files]));
     }
 
 }

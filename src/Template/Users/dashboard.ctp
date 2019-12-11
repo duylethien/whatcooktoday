@@ -100,23 +100,17 @@
                     echo $this->Form->create($user_data, ['enctype' => 'multipart/form-data']);
                     echo $this->Form->controls(
                         [
-                            'firstname'    => ['value' => $user['firstname'], 'required'  => false, 'placeholder' => 'Enter first name', 'label' => ['text' => __d('profile', 'firstname')]],
+                            'firstname'    => ['value' => $user['firstname'], 'required'  => true, 'placeholder' => 'Enter first name', 'label' => ['text' => __d('profile', 'firstname')]],
                             'lastname'     => ['value' => $user['lastname'], 'required'  => false, 'placeholder' => 'Enter last name', 'label' => ['text' => __d('profile', 'lastname')]],
-                            'username'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'username')]],
-                            'email'        => ['value' => $user['email'],           'required'  => false, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
-                            'country'      => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'country')]],
-                            'password'     => ['value' => $user['username'], 'required'  => false, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'password')]],
+                            'username'     => ['value' => $user['username'], 'required'  => true, 'placeholder' => 'Enter username', 'label' => ['text' => __d('profile', 'username')]],
+                            'email'        => ['value' => $user['email'],'disabled' => true, 'placeholder' => 'Enter email', 'label' => ['text' => __d('profile', 'email')]],
+                            'password_new' => ['type' => 'password', 'required'  => false, 'placeholder' => 'Nhập mật khẩu mới', 'label' => ['text' => __d('profile', 'Mật khẩu mới')]],
+                            'password_re'  => ['type' => 'password', 'required'  => false, 'placeholder' => 'Nhập lại mật khẩu', 'label' => ['text' => __d('profile', 'Nhập lại mật khẩu')]],
                             'description'  => ['value' => $user['description'], 'type' => 'textarea', 'required'  => false, 'placeholder' => 'Enter description', 'label' => ['text' => __d('profile', 'description')]],
                             'gender'  => ['type' => 'radio', 'options' => [__d('profile', 'female'), __d('profile', 'male')], 'value' => $user['gender'], 'label' => ['text' => __d('profile', 'gender')] ],
-                            'file' => ['type' => 'file', 'class' => 'form-control', 'label' => ['text' => __d('profile', 'Ảnh đại diện')]]
+                            'file' => ['type' => 'file', 'class' => 'upload-btn', 'label' => ['text' => __d('profile', 'Ảnh đại diện')]]
                         ]
                     );
-                    if (!$user['image']) {
-                        echo $this->Html->image("users/default.png", ["alt" => "Avatar"]);
-                    } else {
-                        echo $this->Html->image('users/' . $user['image'], ["alt" => "Avatar"]);
-                    }
-//                    echo $this->Form->radio('gender', ['Masculine', 'Feminine', 'Neuter'], ['value' => 0]);
 
                     echo $this->Form->button('<i class="fa fa-user"></i>'. __d('profile', 'update profile'),['class' => 'button color add_ingredient', 'style' => 'margin-left: 15px;']);
                     echo $this->Form->end();

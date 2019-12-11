@@ -138,9 +138,8 @@ class UsersController extends AppController {
     }
 
     public function dashboard() {
-        $file = $this->request->data(['file']);
-//        dd($duy);
-        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/users/' . $file['name']);
+        $file = $this->request->getData(['file']);
+
         $this->set('title', 'Dashboard');
         $this->viewBuilder()->setLayout('user');
         $this->set('user', $this->request->getSession()->read('Auth.User'));
@@ -153,8 +152,6 @@ class UsersController extends AppController {
         $user_data = $Users->get($this->request->getSession()->read('Auth.User.user_id'));
         if($this->request->is('put') AND !empty($this->request->getData()) )
         {
-            // $user_data->accessible('email', FALSE);
-
             $userdata = $Users->patchEntity($user_data, $this->request->getData(), [
                 'validate' => 'update_profile'
             ]);
@@ -163,11 +160,34 @@ class UsersController extends AppController {
                 // Form Validation TRUE
                 $this->Flash->error('Please Fill required fields');
             } else {
+                /**
+                 * neu co nhap de thay doi mk (ca 3 tr deu co thi moi doi mat khau)
+                 */
+                $pass['password'] = $this->request->getData('password_new');
+                $pass['password_re'] = $this->request->getData('password_re');
+                if (!(empty($pass['password']) && empty($pass['password_re']))) {
+                    if ( $pass['password'] ==  $pass['password_re']) {
+                        $user_data->password = $pass['password'];
+                    } else {
+                        $this->Flash->error(__('Hai mat khau khong trung!'));
+                        return;
+                    }
+                }
                 $user_data->username    = $this->request->getData('username');
                 $user_data->firstname   = $this->request->getData('firstname');
                 $user_data->lastname = $this->request->getData('lastname');
                 $user_data->description = $this->request->getData('description');
                 $user_data->gender = $this->request->getData('gender');
+
+                if (!empty($file['tmp_name'])) {
+                    try {
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/users/' . $file['name']);
+                        $user_data->image = $file['name'];
+                        $this->request->getSession()->write('Auth.User.image', $file['name']);
+                    } catch (\Exception $e) {
+                        $this->Flash->error($e);
+                    }
+                }
 
                 // Form Validation FALSE
                 if ($Users->save($user_data)) {
