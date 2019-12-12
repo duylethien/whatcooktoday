@@ -124,7 +124,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 " for="field-1"> <?php echo ('Ảnh đại diện công thức') ?> <span class="required">*</span></label>
                         <div class="col-sm-8">
-                            <input type="file" name="featured_imageas" class="upload-btn">
+                            <input type="file" name="featured_image" class="upload-btn">
                         </div>
                         <div class="col-sm-2 text-right">
                             <?php if ($recipes['featured_image']): echo $this->Html->image('recipes/' . $recipes['featured_image'], [

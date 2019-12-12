@@ -104,18 +104,18 @@
                                     [
                                         'category_id'  => ['required'  => true, 'type' => 'select', 'options' => $options, 'value' => $recipes['category_id'], 'label' => ['text' => 'Thể loại *'], 'class' => ['class'=> 'select2-container form-control s2example-1']],
                                         'title' => ['required'  => true, 'placeholder' => 'Nhập tiêu đề','label' => ['class'=> 'form-control-label', 'text' => 'Chủ đề *']],
-                                        'permalink' => ['required'  => true, 'placeholder' => 'Nhập đường dẫn liên kết', 'label' => ['class'=> 'form-control-label', 'text' => 'tên đường dẫn']],
+                                        'permalink' => ['required'  => true, 'placeholder' => 'Nhập đường dẫn liên kết', 'label' => ['class'=> 'form-control-label', 'text' => 'Tên đường dẫn *']],
                                         'difficulty'  => ['required'  => true, 'type' => 'radio', 'options' => ['Dễ', 'Trung bình', 'Khó'], 'value' => $recipes['difficulty'], 'label' => ['text' => 'Độ khó *']],
                                         'prepare_time' => ['required'  => false, 'placeholder' => 'Nhập thời gian nấu', 'label' => ['class'=> 'form-control-label', 'text' => 'Thời gian chuẩn bị']],
                                         'serves' => ['required'  => false, 'placeholder' => 'Nhập số người', 'label' => ['class'=> 'form-control-label', 'text' => 'Phục vụ']],
                                         'cooking_time' => ['required'  => false, 'placeholder' => 'Nhập thời gian nấu', 'label' => ['class'=> 'form-control-label', 'text' => 'Thời gian nấu']],
                                         'calories' => ['required'  => false, 'placeholder' => 'Nhập calories', 'label' => ['class'=> 'form-control-label', 'text' => 'Calories']],
-                                        'video'  => ['required'  => true, 'type' => 'textarea', 'placeholder' => 'Nhập link video hướng dẫn', 'label' => ['class'=> 'form-control-label', 'text' => 'Video']],
+                                        'video'  => ['required'  => false, 'type' => 'textarea', 'placeholder' => 'Nhập link video hướng dẫn', 'label' => ['class'=> 'form-control-label', 'text' => 'Video']],
                                         'description'  => ['required'  => true, 'type' => 'textarea', 'placeholder' => 'Nhập mô tả', 'label' => ['class'=> 'form-control-label', 'text' => 'Mô tả *'], 'rows' => '10', 'cols' => '15'],
                                         'directions'  => ['required'  => true, 'type' => 'textarea', 'placeholder' => 'Nhập hướng dẫn', 'label' => ['class'=> 'form-control-label', 'text' => 'Hướng dẫn *'], 'rows' => '10', 'cols' => '15'],
                                         'ingredients'  => ['required'  => true, 'type' => 'textarea', 'placeholder' => 'Nhập thành phần', 'label' => ['class'=> 'form-control-label', 'text' => 'Thành phần *'], 'rows' => '10', 'cols' => '15'],
                                         'meta_description'  => ['required'  => false, 'type' => 'textarea', 'placeholder' => 'Nhập mô tả ngắn', 'label' => ['class'=> 'form-control-label', 'text' => 'Mô tả ngắn gọn'], 'rows' => '10', 'cols' => '15'],
-                                        'status'  => ['required'  => true, 'type' => 'radio', 'options' => ['Inactive', 'Active'], 'value' => $recipes['status'], 'label' => ['text' => 'Trạng thái']],
+                                        'status'  => ['required'  => true, 'type' => 'radio', 'options' => ['Inactive', 'Active'], 'value' => $recipes['status'], 'label' => ['text' => 'Trạng thái *']],
 //                            'featured_image' => ['type' => 'file', 'class' => 'upload-btn', 'label' => ['text' => __d('profile', 'Ảnh đại diện công thức')]]
                                     ],
                                     [ 'legend' => false]
@@ -124,7 +124,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 " for="field-1"> <?php echo ('Ảnh đại diện công thức') ?> <span class="required">*</span></label>
                         <div class="col-sm-8">
-                            <input type="file" name="featured_imageas" class="upload-btn">
+                            <input type="file" name="featured_image" class="upload-btn">
                         </div>
                         <div class="col-sm-2 text-right">
                             <?php if ($recipes['featured_image']): echo $this->Html->image('recipes/' . $recipes['featured_image'], [

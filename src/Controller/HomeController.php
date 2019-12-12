@@ -9,7 +9,7 @@ class HomeController extends AppController {
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['i', 'home']);
+//        $this->Auth->allow(['i', 'home']);
         if ($this->Auth->user('user_id')) {
             $this->viewBuilder()->setLayout('default');
         } else {

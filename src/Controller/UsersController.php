@@ -71,7 +71,8 @@ class UsersController extends AppController {
                 $sign_up->username  = $this->request->getData('username');
                 $sign_up->password  = $this->request->getData('password');
                 $sign_up->email     = $this->request->getData('email');
-                $sign_up->role      = 'user';
+                $sign_up->usergroup_id = 1;
+                $sign_up->status = 1;
 
                 // Form Validation FALSE
                 if($this->Users->save($sign_up)) {

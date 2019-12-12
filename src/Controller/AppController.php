@@ -91,7 +91,7 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
-        $this->Auth->allow(['Home', 'index']);
+//        $this->Auth->allow(['Home', 'index']);
         $this->Auth->allow(['Recipes', 'index']);
         $this->Auth->allow(['Recipes', 'detail']);
         $this->Auth->allow(['TipTricks', 'index']);

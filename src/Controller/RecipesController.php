@@ -6,16 +6,16 @@ use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 class RecipesController extends AppController {
-    public function beforeFilter(\Cake\Event\Event $event)
-    {
-//        parent::beforeFilter($event);
+//    public function beforeFilter(\Cake\Event\Event $event)
+//    {
+////        parent::beforeFilter($event);
+////
+////        if ($this->request->param('action') === 'imageUpload') {
+////            $this->eventManager()->off($this->Csrf);
+////        }
 //
-//        if ($this->request->param('action') === 'imageUpload') {
-//            $this->eventManager()->off($this->Csrf);
-//        }
-
-        $this->getEventManager()->off($this->Csrf);
-    }
+//        $this->getEventManager()->off($this->Csrf);
+//    }
 
     public function initialize()
     {
@@ -124,11 +124,21 @@ class RecipesController extends AppController {
 
             // insert user id in recipes id
             $recipes->user_id = $this->Auth->user('user_id'); // $this->request->session()->read('Auth.User.id')
+            $recipes->gallery = json_encode($_POST["gallery"]);
 
             if ($recipes->errors()) {
                 // Form Validation TRUE
                 $this->Flash->error('Please Fill required fields');
             } else {
+                $file = $this->request->getData(['featured_image']);
+                if (!empty($file['tmp_name'])) {
+                    try {
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/recipes/' . $file['name']);
+                        $recipes->featured_image = $file['name'];
+                    } catch (\Exception $e) {
+                        $this->Flash->error($e);
+                    }
+                }
                 // Form Validation FALSE
                 if ($this->Recipes->save($recipes)) {
                     $this->redirect('/recipes/add');
