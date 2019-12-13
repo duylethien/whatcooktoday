@@ -111,7 +111,16 @@
                                     ?>
                                 </td>
                                 <td data-title="Title">
-                                    <h3><?php echo $recipe['title'] ?></h3>
+                                    <h3>
+                                        <?php echo $this->Text->truncate(
+                                            $recipe['title'],
+                                            30,
+                                            [
+                                                'ellipsis' => '...',
+                                                'extract' => false
+                                            ]);
+                                        ?>
+                                    </h3>
                                 </td>
                                 <td data-title="Category"><span class="adcategories"><?php echo $recipe['category']->title ?></span></td>
                                 <td data-title="Ad Status">
