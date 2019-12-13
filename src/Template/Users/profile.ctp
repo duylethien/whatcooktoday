@@ -46,10 +46,13 @@
                                 <i class="fa fa-user"></i>
                                 <span> <?php echo $info['firstname'] ?> <?php echo $info['lastname'] ?></span>
                             </li>
+                            <?php if(!empty($info['gender'])):
+                            ?>
                             <li>
                                 <i class="fa fa-transgender"></i>
                                 <span> <?php if ($info['gender'] == 0): echo __d('profile', 'female'); else: echo __d('profile', 'male'); endif; ?></span>
                             </li>
+                            <?php endif;?>
                             <li>
                                 <i class="fa fa-envelope"></i>
                                 <span> <?php echo $info['email'] ?></span>
@@ -69,8 +72,8 @@
 
                             </li>
                             <li>
-                                <!--                                <i class="fa fa-eye"></i>-->
-                                <!--                                <span> --><?php //echo $user->visited ?><!-- --><?php //echo lang('global_Profile_Views') ?><!--</span>-->
+                                <i class="fa fa-eye"></i>
+                                <span> <?php echo $info['visited'] ?> <?php echo ('Lượt xem') ?></span>
                             </li>
 
                         </ul>
@@ -132,7 +135,7 @@
                     <?php else: ?>
                         <div class="col-md-12">
                             <div class="notification notice">
-                                <p><?php echo lang('global_There_is_no_recipes') ?></p>
+                                <p><?php echo ('global_There_is_no_recipes') ?></p>
                             </div>
                         </div>
                     <?php endif ?>

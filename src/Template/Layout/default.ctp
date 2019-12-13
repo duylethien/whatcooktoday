@@ -58,7 +58,7 @@ $cakeDescription = 'Nấu gì hôm nay';
                 <div class="row">
                     <div class="col-md-3">
                         <div id="logo">
-                            <a href="/home">
+                            <a href="/">
                                 <?php echo $this->Html->image("icons/logo.png", [
                                     "alt" => "Gusto Recipes"
                                 ]);
@@ -124,6 +124,12 @@ $cakeDescription = 'Nấu gì hôm nay';
                                     <a href="javascript:popup_switch('login')" class="login">
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         <?= __('login') ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/signup">
+                                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                                        <?= ('Đăng ký') ?>
                                     </a>
                                 </li>
                             </ul>

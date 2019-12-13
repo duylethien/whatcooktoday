@@ -57,7 +57,7 @@ class UsersTable extends Table
             ->notEmptyString('confirm_password')
             ->add('confirm_password', 'no-misspelling', [
                 'rule' => ['compareWith', 'password'],
-                'message' => 'Passwords are not equal',
+                'message' => 'Hai mật khẩu không trùng nhau!',
             ]);
 //            // User Phone Validation
 //            ->numeric('phone','Please enter numeric values')

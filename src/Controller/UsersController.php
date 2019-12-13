@@ -68,16 +68,16 @@ class UsersController extends AppController {
                 // Form Validation TRUE
                 $this->Flash->error('Please Fill required fields');
             } else {
-                $sign_up->username  = $this->request->getData('username');
+                $sign_up->firstname  = $this->request->getData('firstname');
                 $sign_up->password  = $this->request->getData('password');
                 $sign_up->email     = $this->request->getData('email');
-                $sign_up->usergroup_id = 1;
+                $sign_up->usergroup_id = 2;
                 $sign_up->status = 1;
 
                 // Form Validation FALSE
                 if($this->Users->save($sign_up)) {
                     $this->Flash->success('User Added Successfully');
-                    return $this->redirect(['action' => 'Signup']);
+                    return $this->redirect(['action' => 'login']);
                 }
                 $this->Flash->error(__('Unable to add your user!'));
             }
@@ -99,7 +99,8 @@ class UsersController extends AppController {
         $recipes = $Recipes->find()
             ->contain(['Users', 'Categories'])
             ->where(['Recipes.user_id' => $id])
-            ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
+            ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
+            ->order(['Recipes.created' => 'DESC']);
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
         $recipes->select(['Users.firstname', 'Users.image']);
@@ -110,21 +111,27 @@ class UsersController extends AppController {
         $Users = TableRegistry::getTableLocator()->get('Users');
         $infoUser = $Users->find()
             ->where(['Users.user_id' => $id])
-            ->andWhere(['Users.status' => (\App\Model\Enum\EStatus::ACTIVE)]);
+            ->andWhere(['Users.status' => (\App\Model\Enum\EStatus::ACTIVE)])
+            ->first();
 
-        $infoUser->select([
-            'Users.firstname',
-            'Users.lastname',
-            'Users.username',
-            'Users.email',
-            'Users.description',
-            'Users.image',
-            'Users.usergroup_id',
-            'Users.gender',
-        ]);
-        foreach ($infoUser as $item) {
-            $infoUser = $item;
-        }
+        $test= $infoUser['visited'];
+        $test++;
+        $infoUser['visited'] = $test;
+        $Users->save($infoUser);
+//        $infoUser->select([
+//            'Users.firstname',
+//            'Users.lastname',
+//            'Users.username',
+//            'Users.email',
+//            'Users.visited',
+//            'Users.description',
+//            'Users.image',
+//            'Users.usergroup_id',
+//            'Users.gender',
+//        ]);
+//        foreach ($infoUser as $item) {
+//            $infoUser = $item;
+//        }
         $infoUser['sum_recipe'] = $recipes->count();
 
         $items = $this->paginate($recipes);
@@ -221,7 +228,8 @@ class UsersController extends AppController {
         $Recipes = TableRegistry::getTableLocator()->get('Recipes');
         $recipes = $Recipes->find()
             ->contain(['Categories'])
-            ->where(['Recipes.user_id' => $user['user_id']]);
+            ->where(['Recipes.user_id' => $user['user_id']])
+            ->order(['Recipes.created' => 'DESC']);
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.status', 'Recipes.permalink']);
         $recipes->select(['Categories.title']);

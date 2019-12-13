@@ -21,6 +21,7 @@ class RecipesController extends AppController {
         $Recipes = TableRegistry::getTableLocator()->get('Recipes');
         $recipes = $Recipes->find()
             ->contain(['Users', 'Categories']);
+//            ->order(['Recipes.created' => 'DESC']);
 
         $recipes->select(['Recipes.recipe_id', 'Recipes.status', 'Recipes.title']);
         $recipes->select(['Users.email']);
@@ -153,8 +154,7 @@ class RecipesController extends AppController {
             return $this->redirect('/admin/recipes');
 
         $this->request->allowMethod(['post', 'delete']);
-
-        $Recipes = TableRegistry::getTableLocator()->get('Recipes');
+        $Recipes = TableRegistry::getTableLocator()->get('Users');
 
         // get article
         $recipe = $Recipes->get($id,[

@@ -79,13 +79,17 @@ class RecipesController extends AppController {
 
     public function detail($permalink) {
         $Recipes = TableRegistry::getTableLocator()->get('Recipes');
-        $recipes = $Recipes->find()
+        $recipe = $Recipes->find()
             ->where(['Recipes.permalink' => $permalink])
             ->andWhere(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
-            ->contain(['Users', 'Categories']);
-        foreach ($recipes as $item) {
-            $recipe = $item;
-        }
+            ->contain(['Users', 'Categories'])
+            ->first();
+
+        //count visited
+        $test= $recipe['visited'];
+        $test++;
+        $recipe['visited'] = $test;
+        $Recipes->save($recipe);
 
         $popular_recipes = $Recipes->find()
             ->contain(['Categories'])

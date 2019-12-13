@@ -58,7 +58,7 @@ $cakeDescription = 'Nấu gì hôm nay';
                 <div class="row">
                     <div class="col-md-3">
                         <div id="logo">
-                            <a href="/home">
+                            <a href="/">
                                 <?php echo $this->Html->image("icons/logo.png", [
                                     "alt" => "Gusto Recipes"
                                 ]);

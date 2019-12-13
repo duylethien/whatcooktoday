@@ -42,7 +42,8 @@ class HomeController extends AppController {
         $new_recipes = $Recipes->find()
             ->contain(['Users', 'Categories'])
             ->where(['Recipes.status' => (\App\Model\Enum\EStatus::ACTIVE)])
-            ->limit(18);
+            ->limit(18)
+            ->order(['Recipes.created' => 'DESC']);
         if ($new_recipes->count() != 0) {
             $new_recipes->select(['Recipes.recipe_id', 'Recipes.featured_image', 'Recipes.title', 'Recipes.difficulty', 'Recipes.permalink']);
             $new_recipes->select(['Users.firstname', 'Users.image', 'Users.user_id']);
